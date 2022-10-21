@@ -83,8 +83,139 @@ parameter file that controls the Simulation and tailor model specifications
 See section Running SnowModel.
 
 ### 3.2) Files relating to Outputs
-1. outputs/
-2. ctl_files/
-3. figures/
-4. snowmodel.err
-5. snowmodel.list
+1. `/sm/outputs/`
+2. `/sm/ctl_files/`
+3. `/sm/figures/`
+4. `/sm/snowmodel.err`
+5. `/sm/snowmodel.list`
+
+## 4) Prep before Running
+### 4.1 Memory Requirements
+Because of the large amounts of data stored in this model, we must take into account the size of our domain. 1 GB of data can run on a domain size of about 1200 x 1200. 16 GB of data allows for sizes of about 4800 x 4800. 
+
+|memory (Gb) |   number of grid cells in x and y |   number of cells|
+|------------|-----------------------------------|------------------|
+|  0.5       |             900 x 900             |       800,000    |
+|  1.0       |            1300 x 1300            |     1,700,000    |
+|  2.0       |            1900 x 1900            |     3,600,000    |
+|  4.0       |            2600 x 2600            |     7,000,000    |
+## 5) Running SnowModel
+## 6) Summaries
+### SnowModel Output Vars
+SnowModel keeps track of approximately 175 spatially distributed, temporally evolving, snow and other environmental variables that can be output if they are needed for a specific application.
+
+The lists below include the most common output variables.
+
+Variables commonly output as part of typical SnowModel simulations:
+|Daily Outputs, 2D distributions|Units   |
+|-------------------------------|-----   |
+|air temperature                | (deg C)|
+|relative humidity| (%)|
+|wind speed |(m/s)|
+|wind direction |(deg from True North)|
+|incoming solar radiation | ($\text{W}/\text{m}^2$)|
+|total precipitation (rain+snow)| (m) |
+|rainfall |(m)|
+|snowfall |(m)|
+|snow melt |(m)|
+|snow sublimation |(m)|
+|runoff |(m)|
+|glacier melt |(m)|
+|snow depth |(m)|
+|snow density |($\text{kg}/\text{m}^3$)|
+|snow-water-equivalent (SWE) depth |(m)|
+
+
+The SnowModel post-processing scripts commonly create yearly values of these variables:
+|Variable Name|Variable Description|Units|
+|--|--|--|
+|snow_onset_dos|	day of the start of the core snow period |(day of simulation)|
+|snow_onset_doy|	day of the start of the core snow period |(day of year, 1-365,366)|
+|snow_free_dos|	day of the end of the core snow period |(day of simulation)|
+|snow_free_doy|	day of the end of the core snow period |(day of year, 1-365,366)|
+|snow_first_dos|	day of first snow occurrence during the year| (day of simulation)|
+|snow_first_doy|	day of first snow occurrence during the year| (day of year, 1-365,366)|
+|snow_last_dos|	day of last snow occurrence during the year| (day of simulation)|
+|snow_last_doy|	day of last snow occurrence during the year| (day of year, 1-365,366)|
+|core_snow_days|	number of days in core snow period = the longest period of continuous snow cover |(days)|
+|total_snow_days|	total number of days with snow on the ground during the year |(days)|
+|prec_sum|	total precipitation |(m/yr)|
+|rpre_sum|	rain precipitation |(m/yr)|
+|spre_sum|	solid precipitation (snowfall) |(m/yr)|
+|roff_sum|	total liquid water reaching the ground surface (includes snowmelt, rain, canopy unload, glacier melt, etc.) |(m/yr)|
+|smlt_sum|	total melt per day (from the energy balance) |(m/yr)|
+|glmt_sum|	glacier melt |(m/yr)|
+|snod_max|	maximum snow depth in the year| (m)|
+|snod_max_dos|	day of simulation that snod_max occurred||
+|snod_max_doy|	day of year (1-365,366) that snod_max occurred||
+|swed_max|	maximum snow water equivalent depth in the year| (m)|
+|swed_max_dos|	day of simulation that swed_max occurred||
+|swed_max_doy|	day of year (1-365,366) that swed_max occurred||
+|tair_ave|	annual average 10-m air temperature |(degrees C)|
+|ros|	number of days with rain on snow, defined to be daily rainfall ≥ 3 mm on snow depths ≥ 1.5 cm |(days)|
+
+
+Other fields that are often output during SnowModel runs are in these lists:
+
+
+ENERGY BALANCE:
+|Var|Description|Units|
+|--|--|--|
+|tair|		air temperature| (deg C)|
+|tsfc|		surface (skin) temperature |(deg C)|
+|qsin|		incoming solar rad at the surface |(W/m2)|
+|qlin|		incoming longwave rad at the surface| (W/m2)|
+|qlem|		emitted longwave radiation |(W/m2)|
+|qh	|	sensible heat flux |(W/m2)|
+|qe	|	latent heat flux |(W/m2)|
+|qc	|	conductive heat flux |(W/m2)|
+|qm	|	melt energy flux |(W/m2)|
+|albd|		albedo |(0-1)|
+|ebal|		energy balance error| (W/m2)|
+
+
+METEOROLOGY:
+|Var|Description|Units|
+|--|--|--|
+|tair|		air temperature| (deg C)|
+|relh|		relative humidity| (%)|
+|uwnd|		meridional wind component| (m/s)|
+|vwnd|		zonal wind component| (m/s)|
+|wspd|		wind speed |(m/s)|
+|wdir|		wind direction |(0-360, true N)|
+|qsin|		incoming solar rad at the surface| (W/m2)|
+|qlin|		incoming longwave rad at the surface| (W/m2)|
+|prec|		precipitation |(m/time_step)|
+
+
+SNOWPACK:
+|Var|Description|Units|
+|--|--|--|
+|snod|		snow depth |(m)|
+|sden|		snow density |(kg/m3)|
+|swed|	snow-water-equivalent depth |(m)|
+|roff|		runoff from snowpack base |(m/time_step)|
+|rain|		liquid precipitation |(m/time_step)|
+|spre|		solid precipitation |(m/time_step)|
+|qcs|		canopy sublimation |(m/time_step)|
+|canopy|	canopy interception store |(m)|
+|sumqcs	|summed canopy sublim during year |(m)|
+|sumprec|	summed precipitation during year| (m)|
+|sumsprec|	summed snow precip during year |(m)|
+|sumunload|	summed canopy unloading during year |(m)|
+|sumroff	|summed runoff during the year |(m)|
+|sumswemelt	|summed snow-water-equivalent melt |(m)|
+|sumsublim	|summed static-surface sublimation| (m)|
+|wbal		|water bal error |(m)|
+
+
+BLOWING SNOW:
+|Var|Description|Units|
+|--|--|--|
+|snod	|	snow depth| (m)|
+|subl	|	sublimation at this time step| (m)|
+|salt	|	saltation transport at this time step| (m)|
+|susp	|	suspended transport at this time step| (m)|
+|subgrid|	tabler snow redist at this time step| (m)|
+|sumsubl|	summed sublimation during the year| (m)|
+|sumtran|	summed blowing-snow transport for year| (m)|
