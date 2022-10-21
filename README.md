@@ -219,3 +219,60 @@ BLOWING SNOW:
 |subgrid|	tabler snow redist at this time step| (m)|
 |sumsubl|	summed sublimation during the year| (m)|
 |sumtran|	summed blowing-snow transport for year| (m)|
+
+### SnowModel Vegetation Classes
+| code |description |          veg_shc  |example|                class|
+|--|--|--|--|--|
+|  1  |coniferous forest |15.00|  spruce-fir/taiga/lodgepole | forest|
+|  2  |deciduous forest  |12.00|  aspen forest|                forest|
+|  3  |mixed forest      |14.00 | aspen/spruce-fir/low taiga | forest|
+|  4  |scattered short-conifer |8.00 | pinyon-juniper |         forest|
+|  5  |clearcut conifer  |4.00 | stumps and regenerating|     forest|
+| ||
+|  6|  mesic upland shrub   |0.50 | deeper soils, less rocky |  shrub
+|  7 | xeric upland shrub   |0.25  |rocky, windblown soils    |  shrub
+|  8  |playa shrubland      |1.00  |greasewood, saltbush       | shrub
+|  9  |shrub wetland/riparian |1.75  |willow along streams        |shrub
+| 10  |erect shrub tundra   |0.65  |arctic shrubland           | shrub
+| 11  |low shrub tundra     |0.30  |low to medium arctic shrubs |shrub
+| |||
+| 12  |grassland rangeland   |0.15|  graminoids and forbs   |     grass
+| 13 | subalpine meadow      |0.25 | meadows below treeline  |    grass
+| 14  |tundra (non-tussock)  |0.15  |alpine, high arctic      |   grass
+| 15  |tundra (tussock)      |0.20  |graminoid and dwarf shrubs|  grass
+| 16  |prostrate shrub tundra |0.10  |graminoid dominated        | grass
+| 17  |arctic gram. wetland  |0.20  |grassy wetlands, wet tundra |grass
+| |||
+| 18  |bare                    |0.01|                            |bare|
+|||
+| 19|  water/possibly frozen    |0.01 |                        |water|
+| 20 | permanent snow/glacier   |0.01  |                         |water
+| |||
+| 21 | residential/urban        |0.01 |                          |human
+| 22 | tall crops               |0.40 | e.g., corn stubble      |human
+| 23  |short crops              |0.25 | e.g., wheat stubble      |human
+| |||
+| 24|  user defined (see below)||
+| 25 | user defined (see below)||
+| 26  |user defined (see below)||
+| 27  |user defined (see below)||
+| 28  |user defined (see below)||
+| 29  |user defined (see below)||
+| 30  |user defined (see below)||
+
+The last 7 types are available to be user-defined vegetation types and vegetation snow-holding capacities.  The first 23 vegetation types, and the associated vegetation snow-holding capacities (depth, in meters).
+
+It is also possible to run the model with no vegetation-type
+data array.  To do this you set the following vegetation=constant
+flag in snowmodel.par.
+
+```
+! Define whether the vegetation will be constant or defined by the
+!   topography/vegetation input file name (0.0 means use the file,
+!   1.0 or greater means use a constant vegetation type equal to
+!   the number that is used).  This will define the associated
+!   veg_shc that will be used.  The reason you might use a constant
+!   vegetation type is to avoid generating a veg-distribution file.
+!     const_veg_flag = 12.0
+      const_veg_flag = 0.0
+```
