@@ -100,6 +100,21 @@ Because of the large amounts of data stored in this model, we must take into acc
 |  2.0       |            1900 x 1900            |     3,600,000    |
 |  4.0       |            2600 x 2600            |     7,000,000    |
 ## 5) Running SnowModel
+Now that we got that all out of the way, we can finally run SnowModel. This section will go through how we compille the code, and run the code.
+### 5.1 Compile
+To compile SnowModel, run the `compile_snowmodel.script` (type
+it, or click on it or something, depending on your environment).
+This creates an executable called `snowmodel`. We may need to edit certain lines depending on the compiler that we are using.
+### 5.2 Method 1
+Probably the easiet way to run SnowModel is to run the script `run_snowmodel.script`. All this script does is call another script called `/sm/code/utility/running_SnowModel.script`, and brings up a message when the run is finished. It also create 2 new files: `snowmodel.err` and `snowmodel.list`
+
+Edit this file to change the email address you want the "The SnowModel Run Has Finished" message to be sent to once your simulation is finished (or comment it out, if you don't want such a message sent). For this email to be sent, 'mail' or 'sendmail' must be running on your workstation. It can also be helpful to modify the email subject to provide more information, such as "Subject: the 1999-2010 Oregon SnowModel simulation has finished". It is crucial that the email address in this script is edited - otherwise you will not receive an email saying the SnowModel simulation is finished.
+### 5.3 Method 2
+The other way is to simply execute the the created executable `snowmodel`. We can write the outputs of SnowModel to an output file called `output.info` (or any other name).
+```
+./snowmodel > output.info
+```
+
 ## 6) Summaries
 ### SnowModel Output Vars
 SnowModel keeps track of approximately 175 spatially distributed, temporally evolving, snow and other environmental variables that can be output if they are needed for a specific application.
