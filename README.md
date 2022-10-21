@@ -1,10 +1,10 @@
 # SnowModel Documentation
 Documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
-## 1. Introduction
+## 1) Introduction
 This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but update to fit our needs at Tuttle HAS LAB at Syracuse University.
 
-## 2. Getting Started
+## 2) Getting Started
 ### 2.1 Dependencies
 Largely, we should be running this on the Linux VM. The dependencies that we need are:
 1. Fortran Compiler
@@ -13,32 +13,32 @@ Largely, we should be running this on the Linux VM. The dependencies that we nee
 #### 2.1.1 Fortran Compiler
 Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions.
 
-To check if it is included, open terminal and type
+#### 2.1.1.1 Installing Fortran Compiler
+To check if it is installed, open terminal and type
 ```
 gfortran --version
 ```
-#### 2.1.1.1 Installing Fortran Compiler
 
-### 2.1.2 GDAL
+#### 2.1.2 GDAL
 Classic package.
 we need to run `gdaltransform`, `gdalwarp`, and `gdal_translate` (These are custom code located in `/sm/topo_vege/`. 
-### 2.1.3 GrADS
-The inputs and outputs are binary files that follows GrADS conventions. The website is <include link>.
+#### 2.1.3 GrADS
+The inputs and outputs are binary files that follows GrADS conventions. The website is [here](cola.gmu.edu/grads).
 This is not required to run SnowModel. This is only used to view and graph input and output data.
-## Connecting to VM
-### Mac/Linux
+### 2.2 Connecting to VM
+#### 2.2.1 Mac/Linux
 probably SSH in terminal
-### Windows
+#### 2.2.2 Windows
 probably PuTTY
-## Downloading SnowModel Code
+### 2.3 Downloading SnowModel Code
 we can download code from <>.
 We may need to use a ftp client downloader such as FileZilla or CyberDuck.
-### Running Fortran
+### 2.4 Running Fortran
 Unlike Python, R, or MATLAB, Fortran is not an interperted computer language. This section goes over the basics of Fortran.
 
-## SnowModel
+## 3) SnowModel
 Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
-### File Structure
+### 3.1 File Structure
 1. `/sm/readme_docs/` + README_First.txt
 2. `/sm/code/`
 3. `/sm/topo_vege/`
