@@ -1,8 +1,12 @@
 # SnowModel Documentation
 Documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
+- Written by Haejo Kim
+- Date Created: 10-21-2022
+- Last Change: 10-21-2022
+
 ## 1) Introduction
-This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but update to fit our needs at Tuttle HAS LAB at Syracuse University.
+This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but updated and corrected to fit our needs at Tuttle HAS Lab at Syracuse University.
 
 ## 2) Getting Started
 ### 2.1 Dependencies
@@ -20,10 +24,11 @@ gfortran --version
 ```
 
 #### 2.1.2 GDAL
-Classic package.
+Classic package. [Website](https://gdal.org)
+
 we need to run `gdaltransform`, `gdalwarp`, and `gdal_translate` (These are custom code located in `/sm/topo_vege/`. 
 #### 2.1.3 GrADS
-The inputs and outputs are binary files that follows GrADS conventions. The website is [here](cola.gmu.edu/grads).
+The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
 This is not required to run SnowModel. This is only used to view and graph input and output data.
 ### 2.2 Connecting to VM
 #### 2.2.1 Mac/Linux
@@ -31,7 +36,7 @@ probably SSH in terminal
 #### 2.2.2 Windows
 probably PuTTY
 ### 2.3 Downloading SnowModel Code
-we can download code from <>.
+we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
 We may need to use a ftp client downloader such as FileZilla or CyberDuck.
 ### 2.4 Running Fortran
 Unlike Python, R, or MATLAB, Fortran is not an interperted computer language. This section goes over the basics of Fortran.
@@ -76,3 +81,10 @@ directory that contains the processing for topography and vegetation inputs
 parameter file that controls the Simulation and tailor model specifications
 #### 6. run_snowmodel.script
 See section Running SnowModel.
+
+### 3.2) Files relating to Outputs
+1. outputs/
+2. ctl_files/
+3. figures/
+4. snowmodel.err
+5. snowmodel.list
