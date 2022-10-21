@@ -221,7 +221,9 @@ BLOWING SNOW:
 |sumtran|	summed blowing-snow transport for year| (m)|
 
 ### SnowModel Vegetation Classes
-| code |description |          veg_shc  |example|                class|
+The first 23 vegetation types, and the associated vegetation snow-holding capacities (depth, in meters).
+
+| code |description |        veg_shc (m)  |example|                class|
 |--|--|--|--|--|
 |  1  |coniferous forest |15.00|  spruce-fir/taiga/lodgepole | forest|
 |  2  |deciduous forest  |12.00|  aspen forest|                forest|
@@ -260,11 +262,7 @@ BLOWING SNOW:
 | 29  |user defined (see below)||
 | 30  |user defined (see below)||
 
-The last 7 types are available to be user-defined vegetation types and vegetation snow-holding capacities.  The first 23 vegetation types, and the associated vegetation snow-holding capacities (depth, in meters).
-
-It is also possible to run the model with no vegetation-type
-data array.  To do this you set the following vegetation=constant
-flag in snowmodel.par.
+The last 7 types are available to be user-defined vegetation types and vegetation snow-holding capacities. It is also possible to run the model with no vegetation-type data array.  To do this you set the following vegetation=constant flag in snowmodel.par.
 
 ```
 ! Define whether the vegetation will be constant or defined by the
