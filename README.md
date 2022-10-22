@@ -14,19 +14,26 @@ Largely, we should be running this on the Linux VM. The dependencies that we nee
 1. Fortran Compiler
 2. GDAL
 3. GrADS
+
+I also needed to install a couple of other things on my Linux distribution (Pop_OS 22.04) to get SnowModel to run.
+* at
+* mailutils
+
+Testing will be needed to see what the Linux VM  will need to have to get SnowModel to run.
 #### 2.1.1 Fortran Compiler
 Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions.
 
-#### 2.1.1.1 Installing Fortran Compiler
 To check if it is installed, open terminal and type
 ```
 gfortran --version
 ```
 
 #### 2.1.2 GDAL
-Classic package. [Website](https://gdal.org)
+Classic package. [Website](https://gdal.org). To check if GDAL is installed
+```
+gdalinfo --version
+```
 
-we need to run `gdaltransform`, `gdalwarp`, and `gdal_translate` (These are custom code located in `/sm/topo_vege/`. 
 #### 2.1.3 GrADS
 The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
 This is not required to run SnowModel. This is only used to view and graph input and output data.
@@ -44,23 +51,24 @@ Unlike Python, R, or MATLAB, Fortran is not an interperted computer language. Th
 ## 3) SnowModel
 Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
 ### 3.1 File Structure
-1. `/sm/readme_docs/` + README_First.txt
-2. `/sm/code/`
-3. `/sm/topo_vege/`
+1. `/sm/readme_docs/`
+2. `/sm/README_First.txt`
+3. `/sm/code/`
+4. `/sm/topo_vege/`
     1. `asc_to_grads/`
     2. `NoAm_30m/`
     3. `readme.txt`
-4. `/sm/met/`
+5. `/sm/met/`
     1. `data_download/`
     2. `era5/`
     3. `merra2/`
     4. `nldas2/`
     5. `nora10/`
     6. `stations/`
-5. `/sm/snowmodel.par`
-6. `/sm/run_snowmodel.script`
-7. `/sm/copy_to_new_application.script`
-8. others
+6. `/sm/snowmodel.par`
+7. `/sm/run_snowmodel.script`
+8. `/sm/copy_to_new_application.script`
+9. others folders
     1. `/sm/extra_met/`
     2. `/sm/hrestart`
     3. `/sm/post_process/`
@@ -70,16 +78,16 @@ Here is a rundown of the file structures of SnowModel vital to getting a simulat
     7. `/sm/misc_programs/`
 
 
-#### 1. READMEs
+#### 3.1.1. READMEs
 A bunch of documentation is provided by Glen Liston. Please try to read them outside of this documentation. Also, additional documentation is provided in the folder `/sm/readme_docs/`.
-#### 2. code
+#### 3.1.2. code
 The code. This must be compiled before run!
-#### 3. topo_vege
+#### 3.1.3. topo_vege
 directory that contains the processing for topography and vegetation inputs
-#### 4. met
-#### 5. snowmodel.par
+#### 3.1.4. met
+#### 3.1.5. snowmodel.par
 parameter file that controls the Simulation and tailor model specifications
-#### 6. run_snowmodel.script
+#### 3.1.6. run_snowmodel.script
 See section Running SnowModel.
 
 ### 3.2) Files relating to Outputs
@@ -88,7 +96,14 @@ See section Running SnowModel.
 3. `/sm/figures/`
 4. `/sm/snowmodel.err`
 5. `/sm/snowmodel.list`
-
+#### 3.2.1. outputs
+This folder contains the `.gdat` binary files
+#### 3.2.2. ctl_files
+This folders contains the `.ctl` files that are also required for outputs through GrADS.
+#### 3.2.3. figures
+Figures
+#### 3.2.4. `snowmodel.err` and `snowmodel.list`
+2 text files created during model run call. `snowmodel.err` will have any errors during run that occurred. It also contains runtimes. `snowmodel.list` is a textfile that gives a summary of the run.
 ## 4) Prep before Running
 ### 4.1 Memory Requirements
 Because of the large amounts of data stored in this model, we must take into account the size of our domain. 1 GB of data can run on a domain size of about 1200 x 1200. 16 GB of data allows for sizes of about 4800 x 4800. 
