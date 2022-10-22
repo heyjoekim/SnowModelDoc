@@ -46,8 +46,6 @@ probably PuTTY
 ### 2.3 Downloading SnowModel Code
 we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
 We may need to use a ftp client downloader such as FileZilla or CyberDuck.
-### 2.4 Running Fortran
-Unlike Python, R, or MATLAB, Fortran is not an interperted computer language. This section goes over the basics of Fortran.
 
 ## 3) SnowModel
 Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
@@ -131,7 +129,13 @@ The other way is to simply execute the the created executable `snowmodel`. We ca
 ./snowmodel > output.info
 ```
 
-## 6) Summaries
+## 6) Display Outputs
+After the model run, we can double check using GrADS. This is not a tutorial on GrADS. The general method of getting a display output of data is:
+1. open `.ctl` file
+2. plot
+
+The `.ctl` files will open the corresponding binary file. There are two scripts for plotting located at `/sm/figures/test_example/`.
+## 7) Summaries
 ### SnowModel Output Vars
 SnowModel keeps track of approximately 175 spatially distributed, temporally evolving, snow and other environmental variables that can be output if they are needed for a specific application.
 
