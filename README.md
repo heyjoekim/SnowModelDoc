@@ -35,8 +35,9 @@ gdalinfo --version
 ```
 
 #### 2.1.3 GrADS
-The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
-This is not required to run SnowModel. This is only used to view and graph input and output data.
+The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data.
+
+GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file.
 ### 2.2 Connecting to VM
 #### 2.2.1 Mac/Linux
 probably SSH in terminal
