@@ -46,7 +46,49 @@ probably PuTTY
 ### 2.3 Downloading SnowModel Code
 we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
 We may need to use a ftp client downloader such as FileZilla or CyberDuck.
+### 2.4 Some Fortran Basics
+This section is to give a very basic overview of how we run Fortran. Fortran is short for "Formula Translator". It is mainly used for mathematical and scientific computing. Getting used to running fortran takes some getting used to. For example, let's say we have this code that we want to run
 
+```
+PROGRAM addNumbers
+! This simple program adds two numbers
+    IMPLICIT none
+
+! Type declarations
+    REAL :: a, b, result
+
+! Executable
+    a = 12.0
+    b = 15.0
+    result = a + b
+    PRINT *, 'The total is ', result
+
+end program addNumbers
+```
+Let's go over the structure of a basic Fortran code:
+#### 1. `PROGRAM addNumbers`
+We are creating a program called addNumbers. We can see other things like `subroutine` or  `function`.
+#### 2. `IMPLICIT none`
+This is an old feature of Fortran that by default treats all variables as integers and all other variables as real arguments. Implicit None should always be used. It prevents potential confusion in variable types, and makes detection of typographic errors easier.
+#### 3. `REAL :: a,b,result`
+In Fortran, we have to make and call all variables beforehand and assign their variable types.
+#### 4. Executables
+The actual adding of numbers
+#### 5. `end program addNumbers`
+Declare the end of the file.
+
+Let's call this file: `addNums.f90`. In order to run this code we created, we have to now compile the code. To compile the code, we use whatever Fortran compiler is downloaded on our computer. In my case it is `gfortran`.
+```
+gfortran -o addnums addNums.f90
+```
+This creates an executable. In the code line above, I've told my compiler to output this file as addnums. We can run this executable:
+```
+./addnums
+```
+We should get an output that looks like this:
+```
+ The total is    27.0000000    
+```
 ## 3) SnowModel
 Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
 ### 3.1 File Structure
