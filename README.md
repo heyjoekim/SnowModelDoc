@@ -3,7 +3,7 @@ Documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
 - Written by Haejo Kim
 - Date Created: 10-21-2022
-- Last Change: 10-21-2022
+- Last Change: 10-23-2022
 
 ## 1) Introduction
 This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but updated and corrected to fit our needs at Tuttle HAS Lab at Syracuse University.
