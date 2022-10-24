@@ -21,7 +21,7 @@ I also needed to install a couple of other things on my Linux distribution (Pop_
 
 Testing will be needed to see what the Linux VM  will need to have to get SnowModel to run.
 #### 2.1.1 Fortran Compiler
-Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions.
+Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this, expecially with Macs on ARM processors.
 
 To check if it is installed, open terminal and type
 ```
@@ -35,7 +35,7 @@ gdalinfo --version
 ```
 
 #### 2.1.3 GrADS
-The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this.
+The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data.
 
 GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file.
 ### 2.2 Connecting to VM
