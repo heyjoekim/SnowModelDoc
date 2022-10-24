@@ -3,7 +3,7 @@ Documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
 - Written by Haejo Kim
 - Date Created: 10-21-2022
-- Last Change: 10-23-2022
+- Last Change:  10-24-2022
 
 ## 1) Introduction
 This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but updated and corrected to fit our needs at Tuttle HAS Lab at Syracuse University.
@@ -35,7 +35,7 @@ gdalinfo --version
 ```
 
 #### 2.1.3 GrADS
-The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data.
+The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this.
 
 GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file.
 ### 2.2 Connecting to VM
