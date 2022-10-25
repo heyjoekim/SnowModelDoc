@@ -34,7 +34,7 @@ gfortran --version
 
 #### 2.1.2 GDAL
 Classic package. [Website](https://gdal.org). To check if GDAL is installed
-```
+```bash
 gdalinfo --version
 ```
 
