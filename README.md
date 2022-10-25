@@ -254,7 +254,7 @@ The SnowModel post-processing scripts commonly create yearly values of these var
 |swed_max_dos|	day of simulation that swed_max occurred||
 |swed_max_doy|	day of year (1-365,366) that swed_max occurred||
 |tair_ave|	annual average 10-m air temperature |(degrees C)|
-|ros|	number of days with rain on snow, defined to be daily rainfall ≥ 3 mm on snow depths ≥ 1.5 cm |(days)|
+|ros|	number of days with rain on snow, defined to be daily rainfall $\geq$ 3 mm on snow depths $\geq$ 1.5 cm |(days)|
 
 
 Other fields that are often output during SnowModel runs are in these lists:
