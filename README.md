@@ -217,6 +217,7 @@ SnowModel keeps track of approximately 175 spatially distributed, temporally evo
 The lists below include the most common output variables.
 
 Variables commonly output as part of typical SnowModel simulations:
+
 |Daily Outputs, 2D distributions|Units   |
 |-------------------------------|-----   |
 |air temperature                | (deg C)|
@@ -237,6 +238,7 @@ Variables commonly output as part of typical SnowModel simulations:
 
 
 The SnowModel post-processing scripts commonly create yearly values of these variables:
+
 |Variable Name|Variable Description|Units|
 |--|--|--|
 |snow_onset_dos|	day of the start of the core snow period |(day of simulation)|
@@ -264,11 +266,10 @@ The SnowModel post-processing scripts commonly create yearly values of these var
 |tair_ave|	annual average 10-m air temperature |(degrees C)|
 |ros|	number of days with rain on snow, defined to be daily rainfall $\geq$ 3 mm on snow depths $\geq$ 1.5 cm |(days)|
 
-
 Other fields that are often output during SnowModel runs are in these lists:
 
-
 ENERGY BALANCE:
+
 |Var|Description|Units|
 |--|--|--|
 |tair|		air temperature| (deg C)|
@@ -285,6 +286,7 @@ ENERGY BALANCE:
 
 
 METEOROLOGY:
+
 |Var|Description|Units|
 |--|--|--|
 |tair|		air temperature| (deg C)|
@@ -299,6 +301,7 @@ METEOROLOGY:
 
 
 SNOWPACK:
+
 |Var|Description|Units|
 |--|--|--|
 |snod|		snow depth |(m)|
@@ -320,6 +323,7 @@ SNOWPACK:
 
 
 BLOWING SNOW:
+
 |Var|Description|Units|
 |--|--|--|
 |snod	|	snow depth| (m)|
