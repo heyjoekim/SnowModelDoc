@@ -20,6 +20,7 @@ I also needed to install a couple of other things on my Linux distribution (Pop_
 * mailutils
 
 Testing will be needed to see what the Linux VM  will need to have to get SnowModel to run.
+
 #### 2.1.1 Fortran Compiler
 Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this, expecially with Macs on ARM processors.
 
@@ -38,14 +39,18 @@ gdalinfo --version
 The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data.
 
 GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file.
+
 ### 2.2 Connecting to VM
 #### 2.2.1 Mac/Linux
 probably SSH in terminal
+
 #### 2.2.2 Windows
 probably PuTTY
+
 ### 2.3 Downloading SnowModel Code
 we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
 We may need to use a ftp client downloader such as FileZilla or CyberDuck.
+
 ### 2.4 Some Fortran Basics
 This section is to give a very basic overview of how we run Fortran. Fortran is short for "Formula Translator". It is mainly used for mathematical and scientific computing. Getting used to running fortran takes some getting used to. For example, let's say we have this code that we want to run
 
@@ -66,14 +71,19 @@ PROGRAM addNumbers
 end program addNumbers
 ```
 Let's go over the structure of a basic Fortran code:
+
 #### 1. `PROGRAM addNumbers`
 We are creating a program called addNumbers. We can see other things like `subroutine` or  `function`.
+
 #### 2. `IMPLICIT none`
 This is an old feature of Fortran that by default treats all variables as integers and all other variables as real arguments. Implicit None should always be used. It prevents potential confusion in variable types, and makes detection of typographic errors easier.
+
 #### 3. `REAL :: a,b,result`
 In Fortran, we have to make and call all variables beforehand and assign their variable types.
+
 #### 4. Executables
 The actual adding of numbers
+
 #### 5. `end program addNumbers`
 Declare the end of the file.
 
@@ -91,6 +101,7 @@ We should get an output that looks like this:
 ```
 ## 3) SnowModel
 Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
+
 ### 3.1 File Structure
 1. `/sm/readme_docs/`
 2. `/sm/README_First.txt`
@@ -121,13 +132,17 @@ Here is a rundown of the file structures of SnowModel vital to getting a simulat
 
 #### 3.1.1. READMEs
 A bunch of documentation is provided by Glen Liston. Please try to read them outside of this documentation. Also, additional documentation is provided in the folder `/sm/readme_docs/`.
+
 #### 3.1.2. code
 The code. This must be compiled before run!
+
 #### 3.1.3. topo_vege
 directory that contains the processing for topography and vegetation inputs
+
 #### 3.1.4. met
 #### 3.1.5. snowmodel.par
 parameter file that controls the Simulation and tailor model specifications
+
 #### 3.1.6. run_snowmodel.script
 See section Running SnowModel.
 
@@ -137,14 +152,19 @@ See section Running SnowModel.
 3. `/sm/figures/`
 4. `/sm/snowmodel.err`
 5. `/sm/snowmodel.list`
+
 #### 3.2.1. outputs
 This folder contains the `.gdat` binary files
+
 #### 3.2.2. ctl_files
 This folders contains the `.ctl` files that are also required for outputs through GrADS.
+
 #### 3.2.3. figures
 Figures
+
 #### 3.2.4. `snowmodel.err` and `snowmodel.list`
 2 text files created during model run call. `snowmodel.err` will have any errors during run that occurred. It also contains runtimes. `snowmodel.list` is a textfile that gives a summary of the run.
+
 ## 4) Prep before Running
 ### 4.1 Memory Requirements
 Because of the large amounts of data stored in this model, we must take into account the size of our domain. 1 GB of data can run on a domain size of about 1200 x 1200. 16 GB of data allows for sizes of about 4800 x 4800. 
@@ -155,16 +175,20 @@ Because of the large amounts of data stored in this model, we must take into acc
 |  1.0       |            1300 x 1300            |     1,700,000    |
 |  2.0       |            1900 x 1900            |     3,600,000    |
 |  4.0       |            2600 x 2600            |     7,000,000    |
+
 ## 5) Running SnowModel
 Now that we got that all out of the way, we can finally run SnowModel. This section will go through how we compille the code, and run the code.
+
 ### 5.1 Compile
 To compile SnowModel, run the `compile_snowmodel.script` (type
 it, or click on it or something, depending on your environment).
 This creates an executable called `snowmodel`. We may need to edit certain lines depending on the compiler that we are using.
+
 ### 5.2 Method 1
 Probably the easiet way to run SnowModel is to run the script `run_snowmodel.script`. All this script does is call another script called `/sm/code/utility/running_SnowModel.script`, and brings up a message when the run is finished. It also create 2 new files: `snowmodel.err` and `snowmodel.list`
 
 Edit this file to change the email address you want the "The SnowModel Run Has Finished" message to be sent to once your simulation is finished (or comment it out, if you don't want such a message sent). For this email to be sent, 'mail' or 'sendmail' must be running on your workstation. It can also be helpful to modify the email subject to provide more information, such as "Subject: the 1999-2010 Oregon SnowModel simulation has finished". It is crucial that the email address in this script is edited - otherwise you will not receive an email saying the SnowModel simulation is finished.
+
 ### 5.3 Method 2
 The other way is to simply execute the the created executable `snowmodel`. We can write the outputs of SnowModel to an output file called `output.info` (or any other name).
 ```
@@ -177,6 +201,7 @@ After the model run, we can double check using GrADS. This is not a tutorial on 
 2. plot
 
 The `.ctl` files will open the corresponding binary file. There are two scripts for plotting located at `/sm/figures/test_example/`.
+
 ## 7) Summaries
 ### SnowModel Output Vars
 SnowModel keeps track of approximately 175 spatially distributed, temporally evolving, snow and other environmental variables that can be output if they are needed for a specific application.
