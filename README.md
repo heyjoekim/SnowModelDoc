@@ -11,13 +11,15 @@ This is a documentation for getting SnowModel up and running. This is a rewritin
 ## 2) Getting Started
 ### 2.1 Dependencies
 Largely, we should be running this on the Linux VM. The dependencies that we need are:
+
 1. Fortran Compiler
 2. GDAL
 3. GrADS
 
 I also needed to install a couple of other things on my Linux distribution (Pop_OS 22.04) to get SnowModel to run.
-* at
-* mailutils
+
+- at
+- mailutils
 
 Testing will be needed to see what the Linux VM  will need to have to get SnowModel to run.
 
@@ -25,7 +27,8 @@ Testing will be needed to see what the Linux VM  will need to have to get SnowMo
 Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this, expecially with Macs on ARM processors.
 
 To check if it is installed, open terminal and type
-```
+
+```bash
 gfortran --version
 ```
 
@@ -54,7 +57,7 @@ We may need to use a ftp client downloader such as FileZilla or CyberDuck.
 ### 2.4 Some Fortran Basics
 This section is to give a very basic overview of how we run Fortran. Fortran is short for "Formula Translator". It is mainly used for mathematical and scientific computing. Getting used to running fortran takes some getting used to. For example, let's say we have this code that we want to run
 
-```
+```fortranfree
 PROGRAM addNumbers
 ! This simple program adds two numbers
     IMPLICIT none
@@ -88,15 +91,18 @@ The actual adding of numbers
 Declare the end of the file.
 
 Let's call this file: `addNums.f90`. In order to run this code we created, we have to now compile the code. To compile the code, we use whatever Fortran compiler is downloaded on our computer. In my case it is `gfortran`.
-```
+
+```bash
 gfortran -o addnums addNums.f90
 ```
 This creates an executable. In the code line above, I've told my compiler to output this file as addnums. We can run this executable:
-```
+
+```bash
 ./addnums
 ```
 We should get an output that looks like this:
-```
+
+```bash
  The total is    27.0000000    
 ```
 ## 3) SnowModel
@@ -191,12 +197,14 @@ Edit this file to change the email address you want the "The SnowModel Run Has F
 
 ### 5.3 Method 2
 The other way is to simply execute the the created executable `snowmodel`. We can write the outputs of SnowModel to an output file called `output.info` (or any other name).
-```
+
+```bash
 ./snowmodel > output.info
 ```
 
 ## 6) Display Outputs
 After the model run, we can double check using GrADS. This is not a tutorial on GrADS. The general method of getting a display output of data is:
+
 1. open `.ctl` file
 2. plot
 
@@ -366,7 +374,7 @@ The first 23 vegetation types, and the associated vegetation snow-holding capaci
 
 The last 7 types are available to be user-defined vegetation types and vegetation snow-holding capacities. It is also possible to run the model with no vegetation-type data array.  To do this you set the following vegetation=constant flag in snowmodel.par.
 
-```
+```bash
 ! Define whether the vegetation will be constant or defined by the
 !   topography/vegetation input file name (0.0 means use the file,
 !   1.0 or greater means use a constant vegetation type equal to
