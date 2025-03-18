@@ -24,7 +24,6 @@ To run SnowModel, you will need:
     - gfortran
 
 ### 2.2 Setting up X11 Forwarding and Connecting to VM
-#### 2.2.1 X11 Forwarding
 X11 Forwading is an SSH protocal that allows us to run graphical applications on a remote server and interact with them on our local machine. This  is needed because the linux VM is only currently available on commandline only. This is extremely useful for running GrADS on the VM, as we are able to see the graphs. To allow X11 Forwarding, we need to do the following steps:
 
 On the server:
@@ -50,12 +49,13 @@ On your local machine:
 ssh -Y user-name@as-setuttle-lvm.syr.edu
 ```
 
-is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine.
+is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine. For Windows, you will most likely use a program like PuTTY. I'm pretty sure the process is mostly the same.
+
 ### 2.3 SnowModel Dependencies
 SnowModel requires the following dependencies to run:
 1. gfortran
 2. GDAL
-3. GrADS$^*$
+3. GrADS^*^
 
 #### 2.2.1 Fortran Compiler
 SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
