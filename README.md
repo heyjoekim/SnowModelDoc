@@ -16,14 +16,14 @@ This is a documentation for getting SnowModel up and running. This is a combinat
 
 ## 2) Getting Started
 ### 2.1 Dependencies
-To run SnowModel, you will need:
-1. Access to linux vm (as-setuttle-lvm.syr.edu) with:
-    - X11 Forwarding (see Section 2.2)
-    - ncl
-    - GrADS
-    - gfortran
+To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) with:
+1. X11 Forwarding (see Section 2.1.1)
+2. Anaconda
+3. ncl
+4. GrADS
+5. gfortran (see Section 2.2.1)
 
-### 2.2 Setting up X11 Forwarding and Connecting to VM
+#### 2.1.1 Setting up X11 Forwarding and Connecting to VM
 X11 Forwading is an SSH protocal that allows us to run graphical applications on a remote server and interact with them on our local machine. This  is needed because the linux VM is only currently available on commandline only. This is extremely useful for running GrADS on the VM, as we are able to see the graphs. To allow X11 Forwarding, we need to do the following steps:
 
 On the server:
@@ -51,7 +51,24 @@ ssh -Y user-name@as-setuttle-lvm.syr.edu
 
 is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine. For Windows, you will most likely use a program like PuTTY. I'm pretty sure the process is mostly the same.
 
-### 2.3 SnowModel Dependencies
+#### 2.1.2 NCL
+The NCAR Command Language (NCL) is an interpreted language designed for scientific data analysis and visualization, mainly for climate/weather data. For more info: [click here.](https://www.ncl.ucar.edu/)
+
+Currently the preferred method to downloading NCL is through conda. After downloading Anaconda or miniconda, install ncl with a conda environment:
+```
+conda create -n ncl_stable -c conda-forge ncl
+conda activate ncl_stable
+```
+#### 2.1.3 GrADS
+The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
+
+GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command:
+
+```
+sudo apt-get install grads
+```
+
+### 2.2 SnowModel Dependencies
 SnowModel requires the following dependencies to run:
 1. gfortran
 2. GDAL
@@ -71,80 +88,47 @@ Classic package. [Website](https://gdal.org). To check if GDAL is installed
 ```bash
 gdalinfo --version
 ```
-
 #### 2.2.3 GrADS
-The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). **This is not required to run SnowModel.** This is only used to view and graph input and output data.
+See section 2.1.2 for info on GrADS and how to install it. GrADS is technically not required to run SnowModel. However, it is useful to plot input and output variables.
 
-GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command:
 
-```
-sudo apt-get install grads
-```
-
-### 2.2 Connecting to VM
-#### 2.2.1 Mac/Linux
-probably SSH in terminal
-
-#### 2.2.2 Windows
-probably PuTTY
-
-### 2.3 Downloading SnowModel Code
-we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
-We may need to use a ftp client downloader such as FileZilla or CyberDuck.
-
-### 2.4 Some Fortran Basics
-This section is to give a very basic overview of how we run Fortran. Fortran is short for "Formula Translator". It is mainly used for mathematical and scientific computing. Getting used to running fortran takes some getting used to. For example, let's say we have this code that we want to run
-
-```fortranfree
-PROGRAM addNumbers
-! This simple program adds two numbers
-    IMPLICIT none
-
-! Type declarations
-    REAL :: a, b, result
-
-! Executable
-    a = 12.0
-    b = 15.0
-    result = a + b
-    PRINT *, 'The total is ', result
-
-end program addNumbers
-```
-Let's go over the structure of a basic Fortran code:
-
-#### 1. `PROGRAM addNumbers`
-We are creating a program called addNumbers. We can see other things like `subroutine` or  `function`.
-
-#### 2. `IMPLICIT none`
-This is an old feature of Fortran that by default treats all variables as integers and all other variables as real arguments. Implicit None should always be used. It prevents potential confusion in variable types, and makes detection of typographic errors easier.
-
-#### 3. `REAL :: a,b,result`
-In Fortran, we have to make and call all variables beforehand and assign their variable types.
-
-#### 4. Executables
-The actual adding of numbers
-
-#### 5. `end program addNumbers`
-Declare the end of the file.
-
-Let's call this file: `addNums.f90`. In order to run this code we created, we have to now compile the code. To compile the code, we use whatever Fortran compiler is downloaded on our computer. In my case it is `gfortran`.
-
-```bash
-gfortran -o addnums addNums.f90
-```
-This creates an executable. In the code line above, I've told my compiler to output this file as addnums. We can run this executable:
-
-```bash
-./addnums
-```
-We should get an output that looks like this:
-
-```bash
- The total is    27.0000000    
-```
 ## 3) SnowModel
-Here is a rundown of the file structures of SnowModel vital to getting a simulation running.
+### 3.1 Introduction
+### 3.2 Downloading SnowModel Code
+we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
+Alternatively, we can download Justin Plugh's updated SnowModel code from his GitHub <insert link here>. For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
+
+## 4) Before Running SnowModel
+At this point, all dependencies are taken care of and SnowModel is downloaded. Before we can actually run SnowModel there is fair amount of work that needs to be done. The following workflow needs to be done:
+
+1. Set up Topography and Vegetation Data
+2. Set up Meteorlogical Data
+
+### 4.1 Topo_vege
+### 4.2 Meteorological Data
+I believe SnowModel was initially designed to run using data from meteorological stations that were interpolated using MicroMet. We can also force SnowModel using reanalysis data (i.e. ERA5, NLDAS2, MERRA-2). However, it does take some time.
+#### 4.2.X Download Reanalysis Data
+There are script templates to download reanalysis data. I (and Sam) should have some templates downloading ERA5 and MERRA-2 data. Depending on your needs, daily or hourly data can be downloaded.
+
+#### 4.2.X Some Processing
+The inputs for SnowModel is the following: 
+- tair: Air Temperatire (C)
+- relh: Relative humidity (%)
+- wspd: Wind Speed (m/s)
+- wdir: Wind Direction (0-360 degress)
+- prec: water equivalent Precipitation (mm/dt)
+
+Your may notice that most reanalysis datasets do not have relh, wspd, or wdir. We need to process them! This can vary depending on the reanalysis dataset. wspd and wdir can be obtained from the U and V components of the wind. relh calculation will be a little more involved. Also be careful as reanalysis datasets treat precipitation differently.
+
+The best method I found is to download these data as netcdf files. Process the data and save each input variable that SnowModel needs into its own netcdf file (i.e., save tair to tair.nc, relh to relh.nc). We can use ncl to convert these data into a binary file to create th Micromet input file.
+
+#### 4.2.X NCL: .nc to binary data
+
+#### 4.2.X Running some Fortran Code
+
+## 5) Running SnowModel
+
+## 6) Plotting SnowModel Results
 
 ### 3.1 File Structure
 1. `/sm/readme_docs/`
