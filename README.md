@@ -140,6 +140,27 @@ fbinwrite("path_to_gdat", var)
 #### 4.2.X Running some Fortran Code
 
 ## 5) Running SnowModel
+Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
+### 5.1 Edit snowmodel.par
+The `snowmodel.par` file lists important parameters for our SnowModel run. Read this document carefully and make sure you change all of the relevant parameters to what you need.
+### 5.2 create output folders
+we need to create an outputs directory
+```
+mkdir -p outputs/wo_assim
+```
+### 5.3 Compile SnowModel
+Within the code directory, there is a file called `compile_snowmodel,script`. Go into the code directory and run this script.
+```
+cd code
+./compile_snowmodel.script
+```
+### 5.4 Run SnowModel
+Go back to the main directory. There should now be an executable called `snowmodel`. We can run snowmodel!
+```
+cd ..
+./snowmodel > ./output.dat
+```
+Running just `./snowmodel` just prints a lot of lines to the screen. If you don't to see that, the command above just puts it into a text file. If you don't run into any errors, congratulations! SnowModel has finished and there should be a bunch of ouput data files in `outputs/wo_assim` (or `outputs/wi_assim` if you run it with data assimilation).
 
 ## 6) Plotting SnowModel Results
 
