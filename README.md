@@ -1,30 +1,64 @@
 # SnowModel Documentation
-Documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
+A guide to getting SnowModel to run
+Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
 - Written by Haejo Kim
 - Date Created: 10-21-2022
-- Last Change:  10-24-2022
+- Last Change:  03-18-2025
+
+## Table of Contents
+
+## Acknowledgements
+Thank you to Anna Grunes who provided some updated code and guidance!
 
 ## 1) Introduction
-This is a documentation for getting SnowModel up and running. This is a rewriting of Glen Liston's documentation but updated and corrected to fit our needs at Tuttle HAS Lab at Syracuse University.
+This is a documentation for getting SnowModel up and running. This is a combination of my struggles, Anna Grunes' help, and Glen Liston's documentation. This is what I found works with my current setup and the computer resources available to us at Syracuse University.
 
 ## 2) Getting Started
 ### 2.1 Dependencies
-Largely, we should be running this on the Linux VM. The dependencies that we need are:
+To run SnowModel, you will need:
+1. Access to linux vm (as-setuttle-lvm.syr.edu) with:
+    - X11 Forwarding (see Section 2.2)
+    - ncl
+    - GrADS
+    - gfortran
 
-1. Fortran Compiler
+### 2.2 Setting up X11 Forwarding and Connecting to VM
+#### 2.2.1 X11 Forwarding
+X11 Forwading is an SSH protocal that allows us to run graphical applications on a remote server and interact with them on our local machine. This  is needed because the linux VM is only currently available on commandline only. This is extremely useful for running GrADS on the VM, as we are able to see the graphs. To allow X11 Forwarding, we need to do the following steps:
+
+On the server:
+1. Make sure `xauth` is installed (it was, but doesn't hurt to double check)
+2. Edit `/etc/ssh/ssh_config`. Make sure the following items are uncommented and has the following values
+```
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+X11Forwarding
+X11DisplayOffset 10
+X11UseLocalHost no
+```
+3. Restart the sshd daemon
+```
+sudo service sshd restart
+```
+
+For more information go to this stack overflow answer [here.](https://stackoverflow.com/a/23033038)
+
+On your local machine:
+1. connect to the VM. If you have Mac or Linux, the following command should suffice
+```
+ssh -Y user-name@as-setuttle-lvm.syr.edu
+```
+
+is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine.
+### 2.3 SnowModel Dependencies
+SnowModel requires the following dependencies to run:
+1. gfortran
 2. GDAL
-3. GrADS
+3. GrADS$^*$
 
-I also needed to install a couple of other things on my Linux distribution (Pop_OS 22.04) to get SnowModel to run.
-
-- at
-- mailutils
-
-Testing will be needed to see what the Linux VM  will need to have to get SnowModel to run.
-
-#### 2.1.1 Fortran Compiler
-Glen Liston's code was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available. Need to double check this, expecially with Macs on ARM processors.
+#### 2.2.1 Fortran Compiler
+SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
 
 To check if it is installed, open terminal and type
 
@@ -32,16 +66,20 @@ To check if it is installed, open terminal and type
 gfortran --version
 ```
 
-#### 2.1.2 GDAL
+#### 2.2.2 GDAL
 Classic package. [Website](https://gdal.org). To check if GDAL is installed
 ```bash
 gdalinfo --version
 ```
 
-#### 2.1.3 GrADS
-The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). This is not required to run SnowModel. This is only used to view and graph input and output data.
+#### 2.2.3 GrADS
+The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/). **This is not required to run SnowModel.** This is only used to view and graph input and output data.
 
-GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file.
+GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command:
+
+```
+sudo apt-get install grads
+```
 
 ### 2.2 Connecting to VM
 #### 2.2.1 Mac/Linux
@@ -266,7 +304,9 @@ The SnowModel post-processing scripts commonly create yearly values of these var
 |tair_ave|	annual average 10-m air temperature |(degrees C)|
 |ros|	number of days with rain on snow, defined to be daily rainfall $\geq$ 3 mm on snow depths $\geq$ 1.5 cm |(days)|
 
+
 Other fields that are often output during SnowModel runs are in these lists:
+
 
 ENERGY BALANCE:
 
