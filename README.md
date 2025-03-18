@@ -7,6 +7,12 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 - Last Change:  03-18-2025
 
 ## Table of Contents
+1. Introduction
+2. Getting Started
+3. SnowModel
+4. Before Running SnowModel
+5. Running SnowModel
+6. Plotting SnowModel Results
 
 ## Acknowledgements
 Thank you to Anna Grunes who provided some updated code and guidance!
@@ -163,8 +169,36 @@ cd ..
 Running just `./snowmodel` just prints a lot of lines to the screen. If you don't to see that, the command above just puts it into a text file. If you don't run into any errors, congratulations! SnowModel has finished and there should be a bunch of ouput data files in `outputs/wo_assim` (or `outputs/wi_assim` if you run it with data assimilation).
 
 ## 6) Plotting SnowModel Results
+So we completed a SnowModel run. Let's plot the results. Let's use the model output snow depths as an example.
+### 6.1 Make a GrADS Data Descriptor File
+The binary data file for the model output snow depths should be located in `outputs/wo_assim/snod.gdat`. To open this file in GrADS, we need to create a data descriptor file. I like to put these descriptor files into a separate directory.
 
-### 3.1 File Structure
+```
+mkdir ctls
+```
+We can create the data descriptor files for each of the variables we want to plot. The data descriptor for snow depth will look as such:
+```
+DSET ^../outputs/wo_assim/snod.gdat
+TITLE SnowModel single-var output file
+UNDEF -9999.0
+XDEF nx LINEAR 1.0 1.0
+YDEF ny LINEAR 1.0 1.0
+ZDEF 1 LINEAR 1 1
+TDEF ndays LINEAR DDmonYYYY 1dy
+VARS 1
+snod 0 0 snow depth (m)
+ENDVARS
+```
+Explaining the .ctl files:
+
+### 6.2 Plot with GrADS
+We can start up GrADS to plot the variable. To open the dataset, we open the data descriptor file in GrADS.
+
+### 6.3 TODO: Plotting without GrADS
+For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out.
+
+## 7) Summaries
+### 7.1 Original SM File Structure
 1. `/sm/readme_docs/`
 2. `/sm/README_First.txt`
 3. `/sm/code/`
@@ -191,44 +225,37 @@ Running just `./snowmodel` just prints a lot of lines to the screen. If you don'
     6. `/sm/swe_assim/`
     7. `/sm/misc_programs/`
 
-
-#### 3.1.1. READMEs
+#### 7.1.1 READMEs
 A bunch of documentation is provided by Glen Liston. Please try to read them outside of this documentation. Also, additional documentation is provided in the folder `/sm/readme_docs/`.
 
-#### 3.1.2. code
+#### 7.1.2 code
 The code. This must be compiled before run!
 
-#### 3.1.3. topo_vege
+#### 7.1.3 topo_vege
 directory that contains the processing for topography and vegetation inputs
 
-#### 3.1.4. met
-#### 3.1.5. snowmodel.par
+#### 7.1.4 met
+#### 7.1.5 snowmodel.par
 parameter file that controls the Simulation and tailor model specifications
 
-#### 3.1.6. run_snowmodel.script
+#### 7.1.6 run_snowmodel.script
 See section Running SnowModel.
 
-### 3.2) Files relating to Outputs
+### 7.2 Files relating to Outputs
 1. `/sm/outputs/`
 2. `/sm/ctl_files/`
 3. `/sm/figures/`
-4. `/sm/snowmodel.err`
-5. `/sm/snowmodel.list`
 
-#### 3.2.1. outputs
+#### 7.2.1 outputs
 This folder contains the `.gdat` binary files
 
-#### 3.2.2. ctl_files
+#### 7.2.2 ctl_files
 This folders contains the `.ctl` files that are also required for outputs through GrADS.
 
-#### 3.2.3. figures
+#### 7.2.3. figures
 Figures
 
-#### 3.2.4. `snowmodel.err` and `snowmodel.list`
-2 text files created during model run call. `snowmodel.err` will have any errors during run that occurred. It also contains runtimes. `snowmodel.list` is a textfile that gives a summary of the run.
-
-## 4) Prep before Running
-### 4.1 Memory Requirements
+### 7.3 Memory Requirements
 Because of the large amounts of data stored in this model, we must take into account the size of our domain. 1 GB of data can run on a domain size of about 1200 x 1200. 16 GB of data allows for sizes of about 4800 x 4800. 
 
 |memory (Gb) |   number of grid cells in x and y |   number of cells|
@@ -238,36 +265,7 @@ Because of the large amounts of data stored in this model, we must take into acc
 |  2.0       |            1900 x 1900            |     3,600,000    |
 |  4.0       |            2600 x 2600            |     7,000,000    |
 
-## 5) Running SnowModel
-Now that we got that all out of the way, we can finally run SnowModel. This section will go through how we compille the code, and run the code.
-
-### 5.1 Compile
-To compile SnowModel, run the `compile_snowmodel.script` (type
-it, or click on it or something, depending on your environment).
-This creates an executable called `snowmodel`. We may need to edit certain lines depending on the compiler that we are using.
-
-### 5.2 Method 1
-Probably the easiet way to run SnowModel is to run the script `run_snowmodel.script`. All this script does is call another script called `/sm/code/utility/running_SnowModel.script`, and brings up a message when the run is finished. It also create 2 new files: `snowmodel.err` and `snowmodel.list`
-
-Edit this file to change the email address you want the "The SnowModel Run Has Finished" message to be sent to once your simulation is finished (or comment it out, if you don't want such a message sent). For this email to be sent, 'mail' or 'sendmail' must be running on your workstation. It can also be helpful to modify the email subject to provide more information, such as "Subject: the 1999-2010 Oregon SnowModel simulation has finished". It is crucial that the email address in this script is edited - otherwise you will not receive an email saying the SnowModel simulation is finished.
-
-### 5.3 Method 2
-The other way is to simply execute the the created executable `snowmodel`. We can write the outputs of SnowModel to an output file called `output.info` (or any other name).
-
-```bash
-./snowmodel > output.info
-```
-
-## 6) Display Outputs
-After the model run, we can double check using GrADS. This is not a tutorial on GrADS. The general method of getting a display output of data is:
-
-1. open `.ctl` file
-2. plot
-
-The `.ctl` files will open the corresponding binary file. There are two scripts for plotting located at `/sm/figures/test_example/`.
-
-## 7) Summaries
-### SnowModel Output Vars
+### 7.4 SnowModel Output Vars
 SnowModel keeps track of approximately 175 spatially distributed, temporally evolving, snow and other environmental variables that can be output if they are needed for a specific application.
 
 The lists below include the most common output variables.
