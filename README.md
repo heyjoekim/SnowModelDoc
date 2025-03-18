@@ -13,6 +13,7 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 4. Before Running SnowModel
 5. Running SnowModel
 6. Plotting SnowModel Results
+7. Summaries
 
 ## Acknowledgements
 Thank you to Anna Grunes who provided some updated code and guidance!
@@ -89,6 +90,14 @@ To check if it is installed, open terminal and type
 gfortran --version
 ```
 
+NOTE: all fortran code needs to be compiled before we run it. A lot of scripts are compiled using this command.
+```
+gfortran -mcmodel=small file.f
+```
+If you are running this on a Mac using the arm64 architecture (usually an M# Macbook), run the above code. If you are going to run it on a linux system run the following line of code.
+```
+gfortran -mcmodel=medium file.f
+```
 #### 2.2.2 GDAL
 Classic package. [Website](https://gdal.org). To check if GDAL is installed
 ```bash
@@ -111,12 +120,67 @@ At this point, all dependencies are taken care of and SnowModel is downloaded. B
 2. Set up Meteorlogical Data
 
 ### 4.1 Topo_vege
+I assume that we are using the NoAm_30m data. The file structure for this directory is as follows:
+- `1_readme_general_topo_vege.txt`
+- `2_readme_topo_vege_data_download.txt`
+- `3_readme_inputs.txt`
+- `4_readme_process_topo_vege.txt`
+- `5_readme_input_names_locations.txt`
+- `6_readme_other_topo_vege_datasets.txt`
+- `SM_domain_config_info_OUTPUTS.dat`
+- `SM_dxdy_cornerll_proj_INPUTS.dat`
+- `data_download/`
+    - `wget_topo_vege_gliston.script`
+- `input_files_info/`
+    - `topo_filepath.dat`
+    - `topo_proj_string.dat`
+    - `vege_filename.dat`
+    - `vege_proj_string.dat`
+- `plot_topo_vege.gs`
+- `process_data/`
+    - `1_topo/`
+        - `1_find_subdomain_ll.f`
+        - `2_project.script`
+        - `3_find_corner_coords_proj.f`
+        - `4_project_back_to_ll.script`
+        - `5_find_subdomain_ll_final.f`
+        - `6_find_length_scale.f`
+        - `7_mk_ll_tile_list.f`
+        - `8_mk_merge_script.script`
+        - `9_gdal_merge_tiles.script`
+        - `10_gdal_ll_to_proj.script`
+        - `11_cleanup_tmp_topo_files.script`
+        - `A_write_coords_info.f`
+        - `B_project_back_to_ll.script`
+        - `C_find_subdomain_ll_final.f`
+        - `outputs/`
+        - `readme.txt`
+    - `2_vege/`
+        - `1_gdal_laea_to_proj.script`
+        - `2_cleanup_tmp_vege_files.script`
+        - `outputs/`
+    - `3_merge_topo_vege/`
+        - `1_merge_topo_vege.f`    
+        - `2_cleanup_flt.script`     
+        - `classes.txt`
+        - `negative_topo_values.dat`
+`process_topo_vege.script`
+
 #### 4.1.1 Data Download
 A wget script is provided from Glen Liston to obtain his topo_vege data. You can supply your own, but it may be easier to use his data. I have downloaded Glen Liston's data and it is on Sam's shared drive. It should be located in `/General/hkim/sm_datafiles/topography/` and `/General/hkim/sm_datafiles/landcover/`.
 
 The topo data is a 1-arcsec, North American dem dataset from US NED 3DEP program. The land cover data is the 2015 North American Land Changeg Monitoring System dataset (NALCMS).
 
 #### 4.1.2 Making Processing Input Files
+It is highly recommended that you read the friendly manual (RTFM...ok not that friendly but read them all!). The main files that need to be edited before we start are
+- `SM_dxdy_cornerll_proj_INPUTS.dat`
+- `input_files_info/`
+    - `topo_filepath.dat`
+    - `topo_proj_string.dat`
+    - `vege_filename.dat`
+    - `vege_proj_string.dat`
+
+If you are using Glen's data, then we just need to edit the `SM_dxdy_cornerll_proj_INPUTS.dat`, and the `topo_filepath.dat` and `vege_filename.dat`.
 #### 4.1.3 Running A Lot of Code
 ### 4.2 Meteorological Data
 I believe SnowModel was initially designed to run using data from meteorological stations that were interpolated using MicroMet. We can also force SnowModel using reanalysis data (i.e. ERA5, NLDAS2, MERRA-2). However, it does take some time.
