@@ -181,9 +181,54 @@ It is highly recommended that you read the friendly manual (RTFM...ok not that f
     - `vege_proj_string.dat`
 
 If you are using Glen's data, then we just need to edit the `SM_dxdy_cornerll_proj_INPUTS.dat`, and the `topo_filepath.dat` and `vege_filename.dat`.
+
+Again RTFM on how to format the `SM_dxdy_cornerll_proj_INPUTS.dat`.
 #### 4.1.3 Running A Lot of Code
+If everything is in place, we can run the `process_topo_vege.script`.
+
 ### 4.2 Meteorological Data
 I believe SnowModel was initially designed to run using data from meteorological stations that were interpolated using MicroMet. We can also force SnowModel using reanalysis data (i.e. ERA5, NLDAS2, MERRA-2). However, it does take some time.
+
+Since I got it working for NLDAS2, this document will go over the steps I took. The file tree looks as such.
+- `1_topo_lonlat/`
+    - `nldas2_topo.txt`
+    - `nldas2_ll.txt`
+    - `readme.txt`
+- `2_define_points/`
+    - `1_points_from_ll_to_proj.script`
+    - `2_pts_sm_domain.f`
+    - `ij_xy_topo.dat`
+    - `npts.dat`
+    - `met_points_proj.dat`
+- `3_figs/`
+    - `SM_info.dat`
+    - `pts.dat`
+    - `met_points.gs`
+    - `fig_files`
+    - `met_points.pdf`
+    - `met_points.png`
+    - `met_points.eps`
+    - `readme.txt`
+- `4_maxiter_offset/`
+    - `start_end_dates_maxiter_ioffset.dat`
+    - `start_end_dates_maxiter_ioffset.f`
+- `5_mk_gdat_optional/`
+    - `mk_SM_gdat_met_file.f`
+    - `sm_met_inputs.ctl`
+    - `sm_met_inputs.gdat`
+    - `readme.txt`
+- `6_fix_drizzle_optional/`
+    - `plot1.gs`
+    - `fix_drizzle.f`
+    - `drizzle_storm_clip.gdat`
+    - `drizzle_info.dat`
+    - `sprec_clipped.gdat`
+    - `drizzle_storm_clip.ctl`
+    - `sprec_clipped.ctl`
+    - `plot2.gs`
+- `7_mk_mm/`
+    - `mk_micromet_NLDAS2.f`
+- `readme.txt`
 #### 4.2.X Download Reanalysis Data
 There are script templates to download reanalysis data. I (and Sam) should have some templates downloading ERA5 and MERRA-2 data. Depending on your needs, daily or hourly data can be downloaded.
 
@@ -206,8 +251,20 @@ f_in = addfile("path_to_netcdf", "r")
 var = f_in->var
 fbinwrite("path_to_gdat", var)
 ```
-
 #### 4.2.X Running some Fortran Code
+These are the necessary steps to create the MicroMet input file. I removed the optional steps! Read the appropriate readme in the directory if you want to and need to do the optional steps!
+1. 1_topo_lonlat
+    - Change the `nldas2_ll.txt` and `nldas2_topo.txt` files only if the input topo_vege is slightly different from Glen Liston's. For example, since I only wanted SRRW, I subset the NLDAS2 forcing to cover the easter US.
+2. 2_define_points
+    1. run `1_points_from_ll_to_proj.script`
+    2. edit "2_pts_sm_domain.f"
+    3. compile and run `2_pts_sm_domain.f`
+3. 4_maxiter_offset
+    1. edit `start_end_dates_maxiter_ioffset.f`
+    2. compile and run `start_end_dates_maxiter_ioffset.f`
+4. 7_mk_mm
+    1. edit `mk_micromet_NLDAS2.f`
+    2. compile and run `mk_micromet_NLDAS2.f`
 
 ## 5) Running SnowModel
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
