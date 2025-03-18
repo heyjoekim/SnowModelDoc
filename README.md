@@ -105,6 +105,13 @@ At this point, all dependencies are taken care of and SnowModel is downloaded. B
 2. Set up Meteorlogical Data
 
 ### 4.1 Topo_vege
+#### 4.1.1 Data Download
+A wget script is provided from Glen Liston to obtain his topo_vege data. You can supply your own, but it may be easier to use his data. I have downloaded Glen Liston's data and it is on Sam's shared drive. It should be located in `/General/hkim/sm_datafiles/topography/` and `/General/hkim/sm_datafiles/landcover/`.
+
+The topo data is a 1-arcsec, North American dem dataset from US NED 3DEP program. The land cover data is the 2015 North American Land Changeg Monitoring System dataset (NALCMS).
+
+#### 4.1.2 Making Processing Input Files
+#### 4.1.3 Running A Lot of Code
 ### 4.2 Meteorological Data
 I believe SnowModel was initially designed to run using data from meteorological stations that were interpolated using MicroMet. We can also force SnowModel using reanalysis data (i.e. ERA5, NLDAS2, MERRA-2). However, it does take some time.
 #### 4.2.X Download Reanalysis Data
@@ -123,6 +130,12 @@ Your may notice that most reanalysis datasets do not have relh, wspd, or wdir. W
 The best method I found is to download these data as netcdf files. Process the data and save each input variable that SnowModel needs into its own netcdf file (i.e., save tair to tair.nc, relh to relh.nc). We can use ncl to convert these data into a binary file to create th Micromet input file.
 
 #### 4.2.X NCL: .nc to binary data
+The following commands in ncl will convert our netcdf files to the binary files
+```ncl
+f_in = addfile("path_to_netcdf", "r")
+var = f_in->var
+fbinwrite("path_to_gdat", var)
+```
 
 #### 4.2.X Running some Fortran Code
 
