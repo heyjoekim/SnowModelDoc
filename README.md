@@ -55,7 +55,7 @@ is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply t
 SnowModel requires the following dependencies to run:
 1. gfortran
 2. GDAL
-3. GrADS^*^
+3. GrADS $^{*}$
 
 #### 2.2.1 Fortran Compiler
 SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
