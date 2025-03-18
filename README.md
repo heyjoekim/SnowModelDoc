@@ -109,6 +109,14 @@ See section 2.1.2 for info on GrADS and how to install it. GrADS is technically 
 
 ## 3) SnowModel
 ### 3.1 Introduction
+SnowModel runs off of 4 subroutines:
+1. MicroMet: defines meteorlogical forcing conditions
+2. EnBal: calculate surface energy exchange
+3. SnowPack: simulates snow depth and SWE evolution
+4. SnowTran-3D: simulates snow redistribution by wind
+
+Highly recommended to read the SnowModel papers by Glen Liston!.
+[Link to paper](https://doi.org/10.1175/JHM548.1)
 ### 3.2 Downloading SnowModel Code
 we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
 Alternatively, we can download Justin Plugh's updated SnowModel code from his GitHub <insert link here>. For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
@@ -257,7 +265,7 @@ These are the necessary steps to create the MicroMet input file. I removed the o
     - Change the `nldas2_ll.txt` and `nldas2_topo.txt` files only if the input topo_vege is slightly different from Glen Liston's. For example, since I only wanted SRRW, I subset the NLDAS2 forcing to cover the easter US.
 2. 2_define_points
     1. run `1_points_from_ll_to_proj.script`
-    2. edit "2_pts_sm_domain.f"
+    2. edit `2_pts_sm_domain.f`
     3. compile and run `2_pts_sm_domain.f`
 3. 4_maxiter_offset
     1. edit `start_end_dates_maxiter_ioffset.f`
@@ -265,6 +273,8 @@ These are the necessary steps to create the MicroMet input file. I removed the o
 4. 7_mk_mm
     1. edit `mk_micromet_NLDAS2.f`
     2. compile and run `mk_micromet_NLDAS2.f`
+
+The process should be similar if you wanted to run SnowModel with ERA5 instead. The processing steps will be different.
 
 ## 5) Running SnowModel
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
