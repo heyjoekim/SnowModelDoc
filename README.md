@@ -190,24 +190,34 @@ snod 0 0 snow depth (m)
 ENDVARS
 ```
 Explaining the .ctl files:
+
 `DSET ^../outputs/wo_assim/snod.gdat`
 - Points to where the binary data files is located. The ^ denotes to look in the same directory as the ctl file.
+
 `TITLE SnowModel single-var output file`
 - Gives a title to the data
+
 `UNDEF -9999.0`
 - Define the undefined values to -9999.0
+
 `XDEF nx LINEAR 1.0 1.0`
 - Define the x dimension limits. nx should be the same number as in `snowmodel.par` and linearly increases from 1.0 with steps of 1.0
+
 `YDEF ny LINEAR 1.0 1.0`
 - Defines the y dimension limits.
+
 `ZDEF 1 LEVELS 1 1`
 - Define the number of levels in the vertical direction. We only need one.
+
 `TDEF ndays LINEAR DDmonYYYY 1dy`
 - Define the time dimension. This is the number of days we run our SnowModel simulation for. We define the start date (e.g., 01oct2023) and increments daily.
+
 `VARS 1`
 - Define how many variables are stored in the binary data file.
+
 `snod 0 0 snow depth (m)`
 - Define the snow depth variable, snod
+
 `ENDVARS`
 - Final line of the ctl file
 
