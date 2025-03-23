@@ -21,14 +21,19 @@ Thank you to Anna Grunes who provided some updated code and guidance!
 ## 1) Introduction
 This is a documentation for getting SnowModel up and running. This is a combination of my struggles, Anna Grunes' help, and Glen Liston's documentation. This is what I found works with my current setup and the computer resources available to us at Syracuse University.
 
+Current setup:
+- SU Managed Macbook Air with macOS Ventura 13.7.4
+- Sam's Linux VM
+
 ## 2) Getting Started
 ### 2.1 Dependencies
 To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) with:
-1. X11 Forwarding (see Section 2.1.1)
+1. X11 Forwarding
 2. Anaconda
 3. ncl
-4. GrADS
-5. gfortran (see Section 2.2.1)
+4. gfortran
+5. GDAL
+6. GrADS$^{*}$
 
 #### 2.1.1 Setting up X11 Forwarding and Connecting to VM
 X11 Forwading is an SSH protocal that allows us to run graphical applications on a remote server and interact with them on our local machine. This  is needed because the linux VM is only currently available on commandline only. This is extremely useful for running GrADS on the VM, as we are able to see the graphs. To allow X11 Forwarding, we need to do the following steps:
@@ -69,19 +74,12 @@ conda activate ncl_stable
 #### 2.1.3 GrADS
 The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
 
-GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command:
+GrADS is technically not required to run SnowModel. However, it is useful to plot input and output variables. GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command. 
 
 ```
 sudo apt-get install grads
 ```
-
-### 2.2 SnowModel Dependencies
-SnowModel requires the following dependencies to run:
-1. gfortran
-2. GDAL
-3. GrADS $^{*}$
-
-#### 2.2.1 Fortran Compiler
+#### 2.1.4 Fortran Compiler
 SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
 
 To check if it is installed, open terminal and type
@@ -98,14 +96,11 @@ If you are running this on a Mac using the arm64 architecture (usually an M# Mac
 ```
 gfortran -mcmodel=medium file.f
 ```
-#### 2.2.2 GDAL
-Classic package. [Website](https://gdal.org). To check if GDAL is installed
+#### 2.1.5 GDAL
+GDAL is a classic package that is used to manipulate geographical data. GDAL is required to run SnowModel. [Website](https://gdal.org). To check if GDAL is installed, use the following command:
 ```bash
 gdalinfo --version
 ```
-#### 2.2.3 GrADS
-See section 2.1.2 for info on GrADS and how to install it. GrADS is technically not required to run SnowModel. However, it is useful to plot input and output variables.
-
 
 ## 3) SnowModel
 ### 3.1 Introduction
@@ -118,7 +113,8 @@ SnowModel runs off of 4 subroutines:
 Highly recommended to read the SnowModel papers by Glen Liston!.
 [Link to paper](https://doi.org/10.1175/JHM548.1)
 ### 3.2 Downloading SnowModel Code
-we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code).
+we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in <include path>.
+
 Alternatively, we can download Justin Plugh's updated SnowModel code from his GitHub <insert link here>. For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
 
 ## 4) Before Running SnowModel
