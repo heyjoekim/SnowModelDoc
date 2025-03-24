@@ -7,11 +7,11 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 - Last Change:  03-18-2025
 
 ## Table of Contents
-1. Introduction
+1. [Introduction](#introduction)
 2. Getting Started
 3. SnowModel
 4. Before Running SnowModel
-5. Running SnowModel
+5. [Running SnowModel](#running-snowmodel)
 6. Plotting SnowModel Results
 7. Summaries
 
