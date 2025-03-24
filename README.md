@@ -28,6 +28,7 @@ Current setup:
 ## 2) Getting Started
 ### 2.1 Dependencies
 To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) with:
+
 1. X11 Forwarding
 2. Anaconda
 3. ncl
@@ -36,12 +37,14 @@ To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) wit
 6. GrADS$^{*}$
 
 #### 2.1.1 Setting up X11 Forwarding and Connecting to VM
+
 X11 Forwading is an SSH protocal that allows us to run graphical applications on a remote server and interact with them on our local machine. This  is needed because the linux VM is only currently available on commandline only. This is extremely useful for running GrADS on the VM, as we are able to see the graphs. To allow X11 Forwarding, we need to do the following steps:
 
 On the server:
+
 1. Make sure `xauth` is installed (it was, but doesn't hurt to double check)
 2. Edit `/etc/ssh/ssh_config`. Make sure the following items are uncommented and has the following values
-```
+```bash
 AllowAgentForwarding yes
 AllowTcpForwarding yes
 X11Forwarding
@@ -49,7 +52,7 @@ X11DisplayOffset 10
 X11UseLocalHost no
 ```
 3. Restart the sshd daemon
-```
+```bash
 sudo service sshd restart
 ```
 
@@ -57,32 +60,35 @@ For more information go to this stack overflow answer [here.](https://stackoverf
 
 On your local machine:
 1. connect to the VM. If you have Mac or Linux, the following command should suffice
-```
+```bash
 ssh -Y user-name@as-setuttle-lvm.syr.edu
 ```
 
 is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine. For Windows, you will most likely use a program like PuTTY. I'm pretty sure the process is mostly the same.
 
 #### 2.1.2 NCL
+
 The NCAR Command Language (NCL) is an interpreted language designed for scientific data analysis and visualization, mainly for climate/weather data. For more info: [click here.](https://www.ncl.ucar.edu/)
 
 Currently the preferred method to downloading NCL is through conda. After downloading Anaconda or miniconda, install ncl with a conda environment:
-```
+```bash
 conda create -n ncl_stable -c conda-forge ncl
 conda activate ncl_stable
 ```
 #### 2.1.3 GrADS
+
 The Grid Analysis and Display System (GrADS) is a desktop tool that allows for easy access to manipulate and visualize earth science data files. The inputs and outputs are binary files that follows GrADS conventions. The website is [here](http://cola.gmu.edu/grads/).
 
 GrADS is technically not required to run SnowModel. However, it is useful to plot input and output variables. GrADS can be downloaded for Windows, Mac, and Linux. It may be on some repositories and we don't need to download a tar file. On Sam's linux VM which runs some version of Ubuntu, GrADS can be installed using the following command. 
 
-```
+```bash
 sudo apt-get install grads
 ```
 
 There is another updated version of GrADS called OpenGrADS that can interface with python. It may be worth experimenting with this version in the future.
 
 #### 2.1.4 Fortran Compiler
+
 SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
 
 To check if it is installed, open terminal and type
@@ -92,14 +98,15 @@ gfortran --version
 ```
 
 NOTE: all fortran code needs to be compiled before we run it. A lot of scripts are compiled using this command.
-```
+```bash
 gfortran -mcmodel=small file.f
 ```
 If you are running this on a Mac using the arm64 architecture (usually an M# Macbook), run the above code. If you are going to run it on a linux system run the following line of code.
-```
+```bash
 gfortran -mcmodel=medium file.f
 ```
 #### 2.1.5 GDAL
+
 GDAL is a classic package that is used to manipulate geographical data. GDAL is required to run SnowModel. [Website](https://gdal.org). To check if GDAL is installed, use the following command:
 ```bash
 gdalinfo --version
@@ -108,15 +115,16 @@ gdalinfo --version
 ## 3) SnowModel
 ### 3.1 Introduction
 SnowModel runs off of 4 subroutines:
-1. MicroMet: defines meteorlogical forcing conditions
+1. MicroMet: defines meteorological forcing conditions
 2. EnBal: calculate surface energy exchange
 3. SnowPack: simulates snow depth and SWE evolution
 4. SnowTran-3D: simulates snow redistribution by wind
 
 Highly recommended to read the SnowModel papers by Glen Liston!.
 [Link to paper](https://doi.org/10.1175/JHM548.1)
+
 ### 3.2 Downloading SnowModel Code
-we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in <include path>.
+We can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in "include path".
 
 Alternatively, we can download Justin Plugh's updated SnowModel code from his [GitHub](https://github.com/jupflug/SnowModel). For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
 
@@ -128,6 +136,7 @@ At this point, all dependencies are taken care of and SnowModel is downloaded. B
 
 ### 4.1 Topo_vege
 I assume that we are using the NoAm_30m data. The file structure for this directory is as follows:
+
 - `1_readme_general_topo_vege.txt`
 - `2_readme_topo_vege_data_download.txt`
 - `3_readme_inputs.txt`
@@ -167,19 +176,22 @@ I assume that we are using the NoAm_30m data. The file structure for this direct
         - `2_cleanup_tmp_vege_files.script`
         - `outputs/`
     - `3_merge_topo_vege/`
-        - `1_merge_topo_vege.f`    
-        - `2_cleanup_flt.script`     
+        - `1_merge_topo_vege.f`
+        - `2_cleanup_flt.script` 
         - `classes.txt`
         - `negative_topo_values.dat`
 `process_topo_vege.script`
 
 #### 4.1.1 Data Download
+
 A wget script is provided from Glen Liston to obtain his topo_vege data. You can supply your own, but it may be easier to use his data. I have downloaded Glen Liston's data and it is on Sam's shared drive. It should be located in `/General/hkim/sm_datafiles/topography/` and `/General/hkim/sm_datafiles/landcover/`.
 
 The topo data is a 1-arcsec, North American dem dataset from US NED 3DEP program. The land cover data is the 2015 North American Land Changeg Monitoring System dataset (NALCMS).
 
 #### 4.1.2 Making Processing Input Files
+
 It is highly recommended that you read the friendly manual (RTFM...ok not that friendly but read them all!). The main files that need to be edited before we start are
+
 - `SM_dxdy_cornerll_proj_INPUTS.dat`
 - `input_files_info/`
     - `topo_filepath.dat`
@@ -190,13 +202,16 @@ It is highly recommended that you read the friendly manual (RTFM...ok not that f
 If you are using Glen's data, then we just need to edit the `SM_dxdy_cornerll_proj_INPUTS.dat`, and the `topo_filepath.dat` and `vege_filename.dat`.
 
 Again RTFM on how to format the `SM_dxdy_cornerll_proj_INPUTS.dat`.
+
 #### 4.1.3 Running A Lot of Code
+
 If everything is in place, we can run the `process_topo_vege.script`.
 
 ### 4.2 Meteorological Data
 I believe SnowModel was initially designed to run using data from meteorological stations that were interpolated using MicroMet. We can also force SnowModel using reanalysis data (i.e. ERA5, NLDAS2, MERRA-2). However, it does take some time.
 
 Since I got it working for NLDAS2, this document will go over the steps I took. The file tree looks as such.
+
 - `1_topo_lonlat/`
     - `nldas2_topo.txt`
     - `nldas2_ll.txt`
@@ -236,11 +251,15 @@ Since I got it working for NLDAS2, this document will go over the steps I took. 
 - `7_mk_mm/`
     - `mk_micromet_NLDAS2.f`
 - `readme.txt`
+
 #### 4.2.1 Download Reanalysis Data
+
 There are script templates to download reanalysis data. I (and Sam) should have some templates scripts to download ERA5 and NLDAS2 data. Depending on your needs, daily or hourly data can be downloaded.
 
 #### 4.2.2 Some Processing
-The inputs for SnowModel is the following: 
+
+The inputs for SnowModel is the following:
+
 - tair: Air Temperatire (C)
 - relh: Relative humidity (%)
 - wspd: Wind Speed (m/s)
@@ -252,14 +271,17 @@ Your may notice that most reanalysis datasets do not have relh, wspd, or wdir. W
 The best method I found is to download these data as netcdf files. Process the data and save each input variable that SnowModel needs into its own netcdf file (i.e., save tair to tair.nc, relh to relh.nc). We can use ncl to convert these data into a binary file to create th Micromet input file.
 
 #### 4.2.3 NCL: .nc to binary data
+
 Glen's code (and Fortran) reads the data as binary files. We need to convert our 3 hourly or daily variable files into the correct format. I found that using NCL is the most straight forward. The following commands in ncl will convert our netcdf files to the binary files
-```ncl
+```bash
 f_in = addfile("path_to_netcdf", "r")
 var = f_in->var
 fbinwrite("path_to_gdat", var)
 ```
 #### 4.2.4 Running some Fortran Code
+
 Follow Glen's steps to create the MicroMet input file. I removed the optional steps that removes the drizzle fraction! Read the appropriate readme in the directory if you want to and need to do the optional steps!
+
 1. 1_topo_lonlat
     - Change the `nldas2_ll.txt` and `nldas2_topo.txt` files only if the input topo_vege is slightly different from Glen Liston's. For example, since I only wanted SRRW, I subset the NLDAS2 forcing to cover the easter US.
 2. 2_define_points
@@ -279,22 +301,23 @@ The process should be similar if you wanted to run SnowModel with ERA5 instead. 
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
 
 Here is how the file structure of SnowModel should look to run.:
+
 - `code/`
     - `compile_snowmodel.script` 
     - `readparam_code.f`
-    - `dataassim_user.f`        
+    - `dataassim_user.f`
     - `snowmodel.inc`
-    - `enbal_code.f`             
+    - `enbal_code.f`         
     - `snowmodel_main.f`
-    - `enbal_code_old.f`         
+    - `enbal_code_old.f`
     - `snowmodel_vars.inc`
-    - `micromet_code.f`          
+    - `micromet_code.f` 
     - `snowpack_code.f`
-    - `micromet_code_dai.f`      
+    - `micromet_code_dai.f` 
     - `snowpack_code_2lay.f`
-    - `micromet_code_tw.f`       
+    - `micromet_code_tw.f` 
     - `snowpack_code_old.f`
-    - `outputs_user.f`           
+    - `outputs_user.f`
     - `snowtran_code.f`
     - `preprocess_code.f`
 - `ctl/`
@@ -306,6 +329,7 @@ Here is how the file structure of SnowModel should look to run.:
 - `snowmodel.par`
 
 Here is what each item does:
+
 - `snowmodel.par`: SnowModel parameter list file
 - `code/`: Where the SnowModel code is located
 - `met`: My input directory. It doesn't have to be called met, but its where I like to    put the topo/vege and met data files. 
@@ -315,23 +339,27 @@ Here is what each item does:
 
 ### 5.1 Edit snowmodel.par
 The `snowmodel.par` file lists important parameters for our SnowModel run. Read this document carefully and make sure you change all of the relevant parameters to what you need.
+
 ### 5.2 create output folders
 we need to create an outputs directory
 ```
 mkdir -p outputs/wo_assim
 ```
+
 ### 5.3 Compile SnowModel
 Within the code directory, there is a file called `compile_snowmodel,script`. Go into the code directory and run this script.
 ```
 cd code
 ./compile_snowmodel.script
 ```
+
 ### 5.4 Run SnowModel
 Go back to the main directory. There should now be an executable called `snowmodel`. We can run snowmodel!
 ```
 cd ..
 ./snowmodel > ./output.dat
 ```
+
 Running just `./snowmodel` just prints a lot of lines to the screen. If you don't to see that, the command above just puts it into a text file. If you don't run into any errors, congratulations! SnowModel has finished and there should be a bunch of ouput data files in `outputs/wo_assim` (or `outputs/wi_assim` if you run it with data assimilation).
 
 ## 6) Plotting SnowModel Results
@@ -343,7 +371,7 @@ The binary data file for the model output snow depths should be located in `outp
 mkdir ctls
 ```
 We can create the data descriptor files for each of the variables we want to plot. The data descriptor for snow depth will look as such:
-```
+```bash
 DSET ^../outputs/wo_assim/snod.gdat
 TITLE SnowModel single-var output file
 UNDEF -9999.0
@@ -422,15 +450,21 @@ For better figures, I eventually would like to get this into a format where I ca
     7. `/sm/misc_programs/`
 
 #### 7.1.1 READMEs
+
 A bunch of documentation is provided by Glen Liston. Please try to read them outside of this documentation. Also, additional documentation is provided in the folder `/sm/readme_docs/`.
 
 #### 7.1.2 code
+
 The code. This must be compiled before run!
 
 #### 7.1.3 topo_vege
+
 directory that contains the processing for topography and vegetation inputs
 
 #### 7.1.4 met
+
+directory that contains the processing for meteorological data. This contains separate directories for reanalysis datasets and station data.
+
 #### 7.1.5 snowmodel.par
 parameter file that controls the Simulation and tailor model specifications
 
@@ -438,14 +472,17 @@ parameter file that controls the Simulation and tailor model specifications
 See section Running SnowModel.
 
 ### 7.2 Files relating to Outputs
+
 1. `/sm/outputs/`
 2. `/sm/ctl_files/`
 3. `/sm/figures/`
 
 #### 7.2.1 outputs
+
 This folder contains the `.gdat` binary files
 
 #### 7.2.2 ctl_files
+
 This folders contains the `.ctl` files that are also required for outputs through GrADS.
 
 #### 7.2.3. figures
