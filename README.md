@@ -79,6 +79,9 @@ GrADS is technically not required to run SnowModel. However, it is useful to plo
 ```
 sudo apt-get install grads
 ```
+
+There is another updated version of GrADS called OpenGrADS that can interface with python. It may be worth experimenting with this version in the future.
+
 #### 2.1.4 Fortran Compiler
 SnowModel was designed to run on a Fortran 77, 90, or 95 compiler. The two tested compliers were the Portland Group complier (`pgf77` or `pgf90`) and the GNU compiler (`gfortran`). `gfortran` should be included in most Linux distributions. Mac OS may have gfortran as well depending on the Xcode utilities that are available.
 
@@ -115,7 +118,7 @@ Highly recommended to read the SnowModel papers by Glen Liston!.
 ### 3.2 Downloading SnowModel Code
 we can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in <include path>.
 
-Alternatively, we can download Justin Plugh's updated SnowModel code from his GitHub <insert link here>. For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
+Alternatively, we can download Justin Plugh's updated SnowModel code from his [GitHub](https://github.com/jupflug/SnowModel). For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
 
 ## 4) Before Running SnowModel
 At this point, all dependencies are taken care of and SnowModel is downloaded. Before we can actually run SnowModel there is fair amount of work that needs to be done. The following workflow needs to be done:
@@ -233,10 +236,10 @@ Since I got it working for NLDAS2, this document will go over the steps I took. 
 - `7_mk_mm/`
     - `mk_micromet_NLDAS2.f`
 - `readme.txt`
-#### 4.2.X Download Reanalysis Data
-There are script templates to download reanalysis data. I (and Sam) should have some templates downloading ERA5 and MERRA-2 data. Depending on your needs, daily or hourly data can be downloaded.
+#### 4.2.1 Download Reanalysis Data
+There are script templates to download reanalysis data. I (and Sam) should have some templates scripts to download ERA5 and NLDAS2 data. Depending on your needs, daily or hourly data can be downloaded.
 
-#### 4.2.X Some Processing
+#### 4.2.2 Some Processing
 The inputs for SnowModel is the following: 
 - tair: Air Temperatire (C)
 - relh: Relative humidity (%)
@@ -244,19 +247,19 @@ The inputs for SnowModel is the following:
 - wdir: Wind Direction (0-360 degress)
 - prec: water equivalent Precipitation (mm/dt)
 
-Your may notice that most reanalysis datasets do not have relh, wspd, or wdir. We need to process them! This can vary depending on the reanalysis dataset. wspd and wdir can be obtained from the U and V components of the wind. relh calculation will be a little more involved. Also be careful as reanalysis datasets treat precipitation differently.
+Your may notice that most reanalysis datasets do not have relh, wspd, or wdir. We need to process them! This can vary depending on the reanalysis dataset. wspd and wdir can be obtained from the U and V components of the wind. relh calculation will be a little more involved depending on what variables are available (e.g., dewpoint in ERA5 or specific humidity in NLDAS2). Also be careful as reanalysis datasets treat precipitation differently.
 
 The best method I found is to download these data as netcdf files. Process the data and save each input variable that SnowModel needs into its own netcdf file (i.e., save tair to tair.nc, relh to relh.nc). We can use ncl to convert these data into a binary file to create th Micromet input file.
 
-#### 4.2.X NCL: .nc to binary data
-The following commands in ncl will convert our netcdf files to the binary files
+#### 4.2.3 NCL: .nc to binary data
+Glen's code (and Fortran) reads the data as binary files. We need to convert our 3 hourly or daily variable files into the correct format. I found that using NCL is the most straight forward. The following commands in ncl will convert our netcdf files to the binary files
 ```ncl
 f_in = addfile("path_to_netcdf", "r")
 var = f_in->var
 fbinwrite("path_to_gdat", var)
 ```
-#### 4.2.X Running some Fortran Code
-These are the necessary steps to create the MicroMet input file. I removed the optional steps! Read the appropriate readme in the directory if you want to and need to do the optional steps!
+#### 4.2.4 Running some Fortran Code
+Follow Glen's steps to create the MicroMet input file. I removed the optional steps that removes the drizzle fraction! Read the appropriate readme in the directory if you want to and need to do the optional steps!
 1. 1_topo_lonlat
     - Change the `nldas2_ll.txt` and `nldas2_topo.txt` files only if the input topo_vege is slightly different from Glen Liston's. For example, since I only wanted SRRW, I subset the NLDAS2 forcing to cover the easter US.
 2. 2_define_points
@@ -274,6 +277,41 @@ The process should be similar if you wanted to run SnowModel with ERA5 instead. 
 
 ## 5) Running SnowModel
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
+
+Here is how the file structure of SnowModel should look to run.:
+- `code/`
+    - `compile_snowmodel.script` 
+    - `readparam_code.f`
+    - `dataassim_user.f`        
+    - `snowmodel.inc`
+    - `enbal_code.f`             
+    - `snowmodel_main.f`
+    - `enbal_code_old.f`         
+    - `snowmodel_vars.inc`
+    - `micromet_code.f`          
+    - `snowpack_code.f`
+    - `micromet_code_dai.f`      
+    - `snowpack_code_2lay.f`
+    - `micromet_code_tw.f`       
+    - `snowpack_code_old.f`
+    - `outputs_user.f`           
+    - `snowtran_code.f`
+    - `preprocess_code.f`
+- `ctl/`
+- `figures/`
+- `met/`
+- `outputs/`
+    - `wo_assim/`
+    - `wi_assim/`
+- `snowmodel.par`
+
+- `snowmodel.par`: SnowModel parameter list file
+- `code/`: Where the SnowModel code is located
+- `met`: My input directory. It doesn't have to be called met, but its where I like to put the topo/vege and met data files. 
+- `outputs/`: Directory where the SnowModel output gets saved. There are two directories within output depending on whether or not you use a data assimilation scheme.
+- `figures/`: Directory containing scripts to create GrADS plots.
+- `ctl/`: Directory containing the data descriptor files for the output data files.
+
 ### 5.1 Edit snowmodel.par
 The `snowmodel.par` file lists important parameters for our SnowModel run. Read this document carefully and make sure you change all of the relevant parameters to what you need.
 ### 5.2 create output folders
