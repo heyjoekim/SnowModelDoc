@@ -418,8 +418,15 @@ Explaining the .ctl files:
 ### 6.2 Plot with GrADS
 We can start up GrADS to plot the variable. To open the dataset, we open the data descriptor file in GrADS.
 
+#### 6.2.1 GrADS References
+Here are some good resources that can be used for reference for plotting GrADS:
+
+1. [GrADS Documentation](http://cola.gmu.edu/grads/gadoc/gadoc.php) The documentation for GrADS. A User guide and quick tutorials are available. 
+2. [GrADS-aholic!](https://gradsaddict.blogspot.com/p/grads-tutorials.html) Nice tutorials here!
+
+
 ### 6.3 TODO: Plotting without GrADS
-For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out.
+For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out. Additionally, we may want to look to switch to OpenGrADS which build on GrADS and adds functionality with python for higher quality figures.
 
 ## 7 Summaries
 ### 7.1 Original SM File Structure
