@@ -308,8 +308,8 @@ Here is how the file structure of SnowModel should look to run.:
 Here is what each item does:
 - `snowmodel.par`: SnowModel parameter list file
 - `code/`: Where the SnowModel code is located
-- `met`: My input directory. It doesn't have to be called met, but its where I like to put the topo/vege and met data files. 
-- `outputs/`: Directory where the SnowModel output gets saved. There are two directories within outputs depending on whether or not you use a data assimilation scheme in SnowModel.
+- `met`: My input directory. It doesn't have to be called met, but its where I like to    put the topo/vege and met data files. 
+- `outputs/`: Directory where the SnowModel output gets saved. There are two directorie   s within outputs depending on whether or not you use a data assimilation scheme in S   nowModel.
 - `figures/`: Directory containing scripts to create GrADS plots.
 - `ctl/`: Directory containing the data descriptor files for the output data files.
 
