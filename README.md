@@ -297,7 +297,7 @@ Follow Glen's steps to create the MicroMet input file. I removed the optional st
 
 The process should be similar if you wanted to run SnowModel with ERA5 instead. The processing steps will be different.
 
-## 5) Running SnowModel
+## Running SnowModel
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
 
 Here is how the file structure of SnowModel should look to run.:
