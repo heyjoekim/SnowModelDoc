@@ -305,6 +305,7 @@ Here is how the file structure of SnowModel should look to run.:
     - `wi_assim/`
 - `snowmodel.par`
 
+Here is what each item does:
 - `snowmodel.par`: SnowModel parameter list file
 - `code/`: Where the SnowModel code is located
 - `met`: My input directory. It doesn't have to be called met, but its where I like to put the topo/vege and met data files. 
