@@ -365,7 +365,7 @@ Running just `./snowmodel` just prints a lot of lines to the screen. If you don'
 ## 6 Plotting SnowModel Results
 So we completed a SnowModel run. Let's plot the results. Let's use the model output snow depths as an example.
 ### 6.1 Make a GrADS Data Descriptor File
-The binary data file for the model output snow depths should be located in `outputs/wo_assim/snod.gdat`. To open this file in GrADS, we need to create a data descriptor file. I like to put these descriptor files into a separate directory.
+The binary data file for the model output snow depths should be located in `outputs/wo_assim/snod.gdat`. To open this file in GrADS, we need to create a data descriptor file. I like to put these descriptor files into a separate directory called `ctls\`. Feel free to call it whatever you like.
 
 ```
 mkdir ctls
@@ -383,7 +383,11 @@ VARS 1
 snod 0 0 snow depth (m)
 ENDVARS
 ```
-Explaining the .ctl files:
+
+We just need to create these for each of the variables we want to plot!
+
+#### 6.1.1 Explaining the .ctl files:
+Here is a breif explanation of each line of the ctl file.
 
 `DSET ^../outputs/wo_assim/snod.gdat`
 - Points to where the binary data files is located. The ^ denotes to look in the same directory as the ctl file.
@@ -416,14 +420,13 @@ Explaining the .ctl files:
 - Final line of the ctl file
 
 ### 6.2 Plot with GrADS
-We can start up GrADS to plot the variable. To open the dataset, we open the data descriptor file in GrADS.
+We can start up GrADS to plot the variable. Better yet, you can use a GrADS script in my example folder to make plots of snow depth or SWE.
 
 #### 6.2.1 GrADS References
 Here are some good resources that can be used for reference for plotting GrADS:
 
 1. [GrADS Documentation](http://cola.gmu.edu/grads/gadoc/gadoc.php) The documentation for GrADS. A User guide and quick tutorials are available. 
 2. [GrADS-aholic!](https://gradsaddict.blogspot.com/p/grads-tutorials.html) Nice tutorials here!
-
 
 ### 6.3 TODO: Plotting without GrADS
 For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out. Additionally, we may want to look to switch to OpenGrADS which build on GrADS and adds functionality with python for higher quality figures.
