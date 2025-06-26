@@ -36,7 +36,7 @@ To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) wit
 3. ncl
 4. gfortran
 5. GDAL
-6. GrADS$^{*}$
+6. GrADS
 
 #### 2.1.1 Setting up X11 Forwarding and Connecting to VM
 
@@ -130,7 +130,7 @@ We can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp
 
 Anna Grunes (Our god and savior) has published her model on GitHub. Her publication should follow soon! The link to her github is: [Anna's SnowModel][https://github.com/agrunes/SnowModel/].
 
-We can clone her github repo on terminal:
+Anna's development added a different rain/snow threshold using wet bulb temperature and a bunch of different changes to work for the Northeast US. We can clone her github repo on terminal:
 ```
 git clone https://github.com/agrunes/SnowModel
 ```
