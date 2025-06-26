@@ -4,7 +4,7 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
 - Written by Haejo Kim
 - Date Created: 10-21-2022
-- Last Change:  06-26-2025
+- Last Change:  03-18-2025
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
@@ -18,16 +18,14 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 ## Acknowledgements
 Thank you to Anna Grunes who provided some updated code and guidance!
 
-## 1 Introduction
+## 1 Introduction {#1-introduction}
 This is a documentation for getting SnowModel up and running. This is a combination of my struggles, Anna Grunes' help, and Glen Liston's documentation. This is what I found works with my current setup and the computer resources available to us at Syracuse University.
-
-Also, this tutorial will assume you are using a terminal emulator of some sort. Let's be honest, you are going to be running shell scripts and FORTRAN, so I highly recommend being comfortable with the terminal at some point!
 
 Current setup:
 - SU Managed Macbook Air with macOS Ventura 13.7.4
 - Sam's Linux VM
 
-## 2 Getting Started
+## 2 Getting Started {#2-getting-started}
 ### 2.1 Dependencies
 To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) with:
 
@@ -114,7 +112,7 @@ GDAL is a classic package that is used to manipulate geographical data. GDAL is 
 gdalinfo --version
 ```
 
-## 3 SnowModel
+## 3 SnowModel {#3-snowmodel}
 ### 3.1 Introduction
 SnowModel runs off of 4 subroutines:
 1. MicroMet: defines meteorological forcing conditions
@@ -128,16 +126,9 @@ Highly recommended to read the SnowModel papers by Glen Liston!.
 ### 3.2 Downloading SnowModel Code
 We can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in "include path".
 
-Anna Grunes (Our god and savior) has published her model on GitHub. Her publication should follow soon! The link to her github is: [Anna's SnowModel][https://github.com/agrunes/SnowModel/].
+Alternatively, we can download Justin Plugh's updated SnowModel code from his [GitHub](https://github.com/jupflug/SnowModel). For modeling in the Eastern US, we may need a different rain/snow threshold using the wet bulb temperature. For that, using Anna Grunes' code may be better "add path to code here". 
 
-We can clone her github repo on terminal:
-```
-git clone https://github.com/agrunes/SnowModel
-```
-
-Alternatively, we can download Justin Plugh's updated SnowModel code from his [GitHub](https://github.com/jupflug/SnowModel).
-
-## 4 Before Running SnowModel
+## 4 Before Running SnowModel {#4-before-running-snowmodel}
 At this point, all dependencies are taken care of and SnowModel is downloaded. Before we can actually run SnowModel there is fair amount of work that needs to be done. The following workflow needs to be done:
 
 1. Set up Topography and Vegetation Data
@@ -306,7 +297,7 @@ Follow Glen's steps to create the MicroMet input file. I removed the optional st
 
 The process should be similar if you wanted to run SnowModel with ERA5 instead. The processing steps will be different.
 
-## 5 Running SnowModel
+## 5 Running SnowModel {#5-running-snowmodel}
 Once you have both vege_topo.gdat and a MicroMet input file, we are FINALLY ready to actually run SnowModel.
 
 Here is how the file structure of SnowModel should look to run.:
@@ -371,7 +362,7 @@ cd ..
 
 Running just `./snowmodel` just prints a lot of lines to the screen. If you don't to see that, the command above just puts it into a text file. If you don't run into any errors, congratulations! SnowModel has finished and there should be a bunch of ouput data files in `outputs/wo_assim` (or `outputs/wi_assim` if you run it with data assimilation).
 
-## 6 Plotting SnowModel Results
+## 6 Plotting SnowModel Results {#6-plotting-snowmodel-results}
 So we completed a SnowModel run. Let's plot the results. Let's use the model output snow depths as an example.
 ### 6.1 Make a GrADS Data Descriptor File
 The binary data file for the model output snow depths should be located in `outputs/wo_assim/snod.gdat`. To open this file in GrADS, we need to create a data descriptor file. I like to put these descriptor files into a separate directory called `ctls\`. Feel free to call it whatever you like.
@@ -440,7 +431,7 @@ Here are some good resources that can be used for reference for plotting GrADS:
 ### 6.3 TODO: Plotting without GrADS
 For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out. Additionally, we may want to look to switch to OpenGrADS which build on GrADS and adds functionality with python for higher quality figures.
 
-## 7 Summaries
+## 7 Summaries {#7-summaries}
 ### 7.1 Original SM File Structure
 1. `/sm/readme_docs/`
 2. `/sm/README_First.txt`
