@@ -128,7 +128,7 @@ Highly recommended to read the SnowModel papers by Glen Liston!.
 ### 3.2 Downloading SnowModel Code
 We can download code from [ftp://gliston.cira.colostate.edu//SnowModel/code](ftp://gliston.cira/colostate.edu/SnowModel/code). The original SnowModel code will be uploaded to Sam's shared drive in "include path".
 
-Anna Grunes (Our god and savior) has published her model on GitHub. Her publication should follow soon! The link to her github is: [Anna's SnowModel][https://github.com/agrunes/SnowModel/].
+Anna Grunes (Our god and savior) has published her model on GitHub. Her publication should follow soon! The link to her github is: [Anna's SnowModel](https://github.com/agrunes/SnowModel/).
 
 Anna's development added a different rain/snow threshold using wet bulb temperature and a bunch of different changes to work for the Northeast US. We can clone her github repo on terminal:
 ```
