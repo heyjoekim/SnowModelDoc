@@ -4,7 +4,7 @@ Internal documentation for Tuttle Hydroclimatology and Snow (HAS) Lab
 
 - Written by Haejo Kim
 - Date Created: 10-21-2022
-- Last Change:  06-26-2025
+- Last Change:  07-08-2025
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
@@ -33,7 +33,7 @@ To run SnowModel, you will need access to linux vm (as-setuttle-lvm.syr.edu) wit
 
 1. X11 Forwarding
 2. Anaconda
-3. ncl
+3. ncl and cdo
 4. gfortran
 5. GDAL
 6. GrADS
@@ -70,12 +70,14 @@ is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply t
 
 #### 2.1.2 NCL
 
-The NCAR Command Language (NCL) is an interpreted language designed for scientific data analysis and visualization, mainly for climate/weather data. For more info: [click here.](https://www.ncl.ucar.edu/)
+The NCAR Command Language (NCL) is an interpreted language designed for scientific data analysis and visualization, mainly for climate/weather data. For more info: [click here.](https://www.ncl.ucar.edu/) Currently the preferred method to downloading NCL is through conda. After downloading Anaconda or miniconda, install ncl with a conda environment:
 
-Currently the preferred method to downloading NCL is through conda. After downloading Anaconda or miniconda, install ncl with a conda environment:
+CDO or Climate Data Operators are a collection of command line operations that can help manipulate and analze climate and model data. I mainly used it to convert the binary gdata files used in GrADS into netCDF files. For more info: [click here.](https://code.mpimet.mpg.de/projects/cdo)
+CDO can also be downloaded through conda. We can create a conda environment for both cdo and ncl or combine them together. The following code will create a conda environment for both. Shockingly, you will need to download conda first, either via Anaconda or miniconda. 
+
 ```bash
-conda create -n ncl_stable -c conda-forge ncl
-conda activate ncl_stable
+conda create -n sm_tools -c conda-forge ncl cdo
+conda activate sm_tools
 ```
 #### 2.1.3 GrADS
 
@@ -439,6 +441,14 @@ Here are some good resources that can be used for reference for plotting GrADS:
 
 ### 6.3 TODO: Plotting without GrADS
 For better figures, I eventually would like to get this into a format where I can plot it on a grid and add other items (i.e., outline of a watershed or other points on the plot). This needs to be worked out. Additionally, we may want to look to switch to OpenGrADS which build on GrADS and adds functionality with python for higher quality figures.
+#### 6.3.1 Current Solution
+The main issue I had was turning the gdat binary files into a file readable in something like python. This is where CDO comes into play. CDO can convert these files into a netcdf pretty easily it looks like!
+
+```
+cdo -f nc import_binary input.ctl output.nc
+```
+
+The line above should hopefully do the trick. I may even want to write a batch script to do this for me. Basically, take the ctl header file for the desired SnowModel output and the line of code above should turn it into a netcdf. It will not have any real lat/lon info, but that workaround should be easily taken care of.
 
 ## 7 Summaries
 ### 7.1 Original SM File Structure
