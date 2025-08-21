@@ -76,8 +76,7 @@ The `-r` flag is optional and used to send files within a directory (aka folder)
 ```bash
 scp -r <name_of_dir-or-file> user-name@as-setuttle-lvm.syr.edu
 ```
-
-Downloading files from the VM would involve switching the path and destination.
+Downloading files from the VM would involve switching the path and destination. It does involve entering your NetID password each time.
 
 
 #### 2.1.2 NCL
