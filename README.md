@@ -74,7 +74,7 @@ scp -r <path_to_source> <path_to_destination>
 
 The `-r` flag is optional and used to send files within a directory (aka folder). To copy files to the VM, we can use
 ```bash
-scp -r <name_of_dir-or-file> user-name@as-setuttle-lvm.syr.edu
+scp -r <name_of_dir-or-file> user-name@as-setuttle-lvm.syr.edu:path/to/stuff
 ```
 Downloading files from the VM would involve switching the path and destination. It does involve entering your NetID password each time.
 
