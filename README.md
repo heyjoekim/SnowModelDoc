@@ -65,8 +65,20 @@ On your local machine:
 ```bash
 ssh -Y user-name@as-setuttle-lvm.syr.edu
 ```
-
 is `-Y` necessary? Yes! To double check that X11 forwarding is working, simply try to run GrADS from the command line. After typinh a y or no for landscape/portrait mode, a blank window should pop-up on your machine. For Windows, you will most likely use a program like PuTTY. I'm pretty sure the process is mostly the same.
+
+To copy files into the VM use the following command called "secured copy":
+```bash
+scp -r <path_to_source> <path_to_destination>
+```
+
+The `-r` flag is optional and used to send files within a directory (aka folder). To copy files to the VM, we can use
+```bash
+scp -r <name_of_dir-or-file> user-name@as-setuttle-lvm.syr.edu
+```
+
+Downloading files from the VM would involve switching the path and destination.
+
 
 #### 2.1.2 NCL
 
