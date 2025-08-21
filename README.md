@@ -283,12 +283,15 @@ The best method I found is to download these data as netcdf files. Process the d
 
 #### 4.2.3 NCL: .nc to binary data
 
-Glen's code (and Fortran) reads the data as binary files. We need to convert our 3 hourly or daily variable files into the correct format. I found that using NCL is the most straight forward. The following commands in ncl will convert our netcdf files to the binary files
+Glen's code (and Fortran) reads the data as binary files. We need to convert our 3 hourly or daily variable files into the correct format. I found that using NCL is the most straight forward. The following commands in ncl will convert our netcdf files to the binary files. In Sam's shared drive, there are now files devoted to converting the five inputs parameters into binary data files. The `nc2bin.sh` file basically runs 5 ncl scripts that will read in an netCDF file and write a binary file like below. Be sure that you activate the conda environment with NCL before you run the script. 
 ```bash
 f_in = addfile("path_to_netcdf", "r")
-var = f_in->var
+var = f_in->tair
 fbinwrite("path_to_gdat", var)
 ```
+
+You will need to correct the IN and OUT parameters for each line in the `ncbin2.sh` file. The IN parameter points to the corresponding NETCDF file. The OUT parameter will create the `.gdat` file and where it will be saved.
+
 #### 4.2.4 Running some Fortran Code
 
 Follow Glen's steps to create the MicroMet input file. I removed the optional steps that removes the drizzle fraction! Read the appropriate readme in the directory if you want to and need to do the optional steps!
